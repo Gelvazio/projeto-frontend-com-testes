@@ -328,3 +328,67 @@ describe('classificarImc — toContain', () => {
     expect(faixa).toContain('Obesidade');
   });
 });
+
+/* ==========================================================================================
+ * TEST.13 — beforeEach() e afterEach(): testes isolados  (slides 34 a 37)
+ *
+ * beforeEach(fn) roda ANTES de cada teste da suite; afterEach(fn) roda DEPOIS de cada um.
+ * Servem para recriar os dados do zero e limpar o que sobrou (mocks, timers, variáveis).
+ * Regra de ouro (slide 37): cada teste é 100% independente — passa sozinho, em qualquer
+ * ordem ou em paralelo. Um teste NUNCA deve depender do que o anterior deixou.
+ * ======================================================================================== */
+describe('calcularImc — beforeEach e afterEach', () => {
+  /** Pessoa usada pelos testes; recriada antes de CADA teste. */
+  let pessoa;
+  /** Conta quantas vezes o beforeEach rodou (só para a demonstração). */
+  let execucoesDoBeforeEach = 0;
+
+  beforeEach(() => {
+    pessoa = { peso: 70, altura: 1.75 };
+    execucoesDoBeforeEach += 1;
+  });
+
+  afterEach(() => {
+    pessoa = undefined;
+  });
+
+  /*
+   * Exemplo 1 — o teste "estraga" os dados de propósito.
+   * O que faz: troca o peso da pessoa para 140 kg e confere o IMC dobrado (~45,7).
+   * Por quê: mostra que um teste pode alterar o estado; o próximo exemplo prova que isso
+   * não vaza, porque o beforeEach recria a pessoa.
+   * Esperado: IMC ~45,71 -> verde.
+   */
+  it('altera o peso da pessoa (só neste teste)', () => {
+    pessoa.peso = 140;
+
+    const imc = calcularImc(pessoa.peso, pessoa.altura);
+
+    expect(imc).toBeCloseTo(45.71, 2);
+  });
+
+  /*
+   * Exemplo 2 — o isolamento em ação.
+   * O que faz: lê a pessoa de novo, logo depois do teste que mudou o peso para 140.
+   * Por quê: se os testes compartilhassem estado, o peso ainda seria 140. Como o beforeEach
+   * recriou { peso: 70, altura: 1.75 }, o resultado volta a ~22,86.
+   * Esperado: peso 70 e IMC ~22,86 -> verde, em qualquer ordem de execução.
+   */
+  it('recebe a pessoa original de novo (o teste anterior não vazou)', () => {
+    const imc = calcularImc(pessoa.peso, pessoa.altura);
+
+    expect(pessoa.peso).toBe(70);
+    expect(imc).toBeCloseTo(22.86, 2);
+  });
+
+  /*
+   * Exemplo 3 — prova de que o beforeEach roda uma vez POR TESTE.
+   * O que faz: confere o contador incrementado no beforeEach.
+   * Por quê: esta é a 3ª execução da suite, então o beforeEach já rodou 3 vezes.
+   * Esperado: 3 -> verde. (Este contador é só demonstração: em teste real, não dependa da
+   * ordem dos testes.)
+   */
+  it('o beforeEach rodou antes de cada um dos 3 testes', () => {
+    expect(execucoesDoBeforeEach).toBe(3);
+  });
+});
