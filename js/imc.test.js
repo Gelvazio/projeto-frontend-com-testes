@@ -63,3 +63,25 @@ describe('calcularImc — casos BDD com it e test', () => {
     expect(calcularImc(80, 2)).toBe(20);
   });
 });
+
+/* ==========================================================================================
+ * TEST.4 — expect(valor): a asserção  (slide 15)
+ *
+ * expect "embrulha" o valor obtido e oferece os matchers (toBe, toEqual...). É o veredito:
+ *   - condição atendida  -> teste verde (passou);
+ *   - condição diferente -> o Vitest para o caso e mostra o diff no terminal, por exemplo:
+ *       Expected: 25
+ *       Received: 24.9
+ * .not inverte qualquer matcher. expect.assertions(n) exige que n asserções rodem: protege
+ * contra o teste "verde" que não conferiu nada (teste sem expect = falsa segurança).
+ * ======================================================================================== */
+describe('calcularImc — expect', () => {
+  it('confere o resultado com expect e com .not', () => {
+    expect.assertions(2);
+
+    const imc = calcularImc(100, 2);
+
+    expect(imc).toBe(25);
+    expect(imc).not.toBe(24.9);
+  });
+});
