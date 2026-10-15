@@ -195,3 +195,27 @@ describe('calcularImc e classificarImc — toBeNull', () => {
     expect(classificarImc(NaN)).toBeNull();
   });
 });
+
+/* ==========================================================================================
+ * TEST.9 — toBeDefined(): o valor existe  (slide 22)
+ *
+ * toBeDefined confere que o valor NÃO é undefined (a variável foi inicializada). Útil para
+ * garantir que algo foi exportado ou devolvido. Atenção: null passa em toBeDefined — para
+ * barrar null também, combine com .not.toBeNull().
+ * ======================================================================================== */
+describe('imc.js — toBeDefined', () => {
+  it('exporta as constantes de limite das faixas', () => {
+    expect(IMC_LIMITE_ABAIXO_DO_PESO).toBeDefined();
+    expect(IMC_LIMITE_PESO_NORMAL).toBeDefined();
+    expect(IMC_LIMITE_SOBREPESO).toBeDefined();
+    expect(IMC_LIMITE_OBESIDADE_I).toBeDefined();
+    expect(IMC_LIMITE_OBESIDADE_II).toBeDefined();
+  });
+
+  it('classificarImc devolve um valor definido e não nulo para um IMC válido', () => {
+    const faixa = classificarImc(22);
+
+    expect(faixa).toBeDefined();
+    expect(faixa).not.toBeNull();
+  });
+});
