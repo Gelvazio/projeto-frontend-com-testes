@@ -4,9 +4,13 @@
   "type": "commonjs",
   "scripts": {
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:report": "vitest run --coverage --mode relatorio"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^5.0.4",
+    "@vitest/ui": "^5.0.4",
     "vitest": "^5.0.4"
   }
 }

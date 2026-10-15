@@ -37,6 +37,35 @@ O `"type": "commonjs"` deste `package.json` existe porque o código é ES6 **sem
 arquivos terminam com `module.exports` condicional. Mesmo assim, os testes podem usar `import`
 (o Vitest converte), como nos slides. A pasta `node_modules/` fica fora do Git (`.gitignore`).
 
+## Relatórios em HTML (testes e cobertura)
+
+Os pacotes `@vitest/coverage-v8` (mede a cobertura) e `@vitest/ui` (gera o relatório dos
+testes) já estão em `devDependencies`: o `npm install` instala os dois. As opções ficam no
+`vitest.config.mjs`.
+
+**Só a cobertura** (quais linhas os testes executaram):
+
+```bash
+npm run test:coverage
+```
+
+- Mostra a tabela no terminal e gera `coverage/index.html` (abre direto no navegador).
+- Mede **todos** os `js/**/*.js`: os módulos ainda sem teste aparecem com 0%, mostrando o que
+  falta testar. Colunas: `% Stmts` (instruções), `% Branch` (caminhos de `if`/ternário),
+  `% Funcs` (funções) e `% Lines` (linhas); `Uncovered Line #s` lista as linhas não executadas.
+
+**Relatório completo** (resultado de cada teste + cobertura):
+
+```bash
+npm run test:report
+```
+
+- Gera `html/index.html`: um arquivo único que **abre direto no navegador, sem servidor** (dois
+  cliques). Mostra cada suite e cada teste, com a cobertura numa aba (`html/coverage/`).
+- O terminal sugere `npx vite preview --outDir html`; com o arquivo único isso não é preciso.
+
+As pastas `coverage/` e `html/` são geradas a cada execução e ficam fora do Git (`.gitignore`).
+
 ## Onde ficam os testes (para a Aula 03)
 
 O `js/imc.test.js` é montado um conceito por vez (tarefa TEST do quadro). A lógica está em
