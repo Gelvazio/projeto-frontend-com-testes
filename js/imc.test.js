@@ -121,3 +121,27 @@ describe('calcularImc — padrão AAA', () => {
     expect(imc).toBe(null);
   });
 });
+
+/* ==========================================================================================
+ * TEST.6 — toBe(): igualdade estrita  (slide 20)
+ *
+ * toBe compara como o operador === : mesmo valor e mesmo tipo. Ideal para PRIMITIVOS:
+ * números, textos (strings) e booleanos. Para objetos e arrays, use toEqual (TEST.11).
+ * ======================================================================================== */
+describe('classificarImc — toBe', () => {
+  it('classifica IMC 17 como "Abaixo do peso" (texto é primitivo)', () => {
+    const faixa = classificarImc(17);
+
+    expect(faixa).toBe('Abaixo do peso');
+  });
+
+  it('calcula exatamente 25 para 100 kg e 2 m (número exato)', () => {
+    const imc = calcularImc(100, 2);
+
+    expect(imc).toBe(25);
+  });
+
+  it('o limite de uma faixa pertence à faixa de cima: 25 já é "Sobrepeso"', () => {
+    expect(classificarImc(25)).toBe('Sobrepeso');
+  });
+});
