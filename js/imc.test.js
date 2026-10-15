@@ -458,3 +458,63 @@ describe('classificarImc — vi.fn()', () => {
     expect(classificadorFalso).toHaveBeenCalledWith(17);
   });
 });
+
+/* ==========================================================================================
+ * TEST.15 — vi.spyOn() e vi.restoreAllMocks()  (slide 27)
+ *
+ * vi.fn() cria uma função do zero; vi.spyOn(objeto, 'metodo') EMBRULHA um método que já
+ * existe num objeto real. Sem mais nada, o método original continua funcionando e o espião
+ * só observa. Com mockReturnValue / mockImplementation, o comportamento é trocado.
+ * vi.restoreAllMocks() devolve os métodos originais: chame no afterEach para um teste não
+ * contaminar o outro (o Number.isFinite trocado afetaria TODOS os testes seguintes).
+ * ======================================================================================== */
+describe('calcularImc — vi.spyOn()', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  /*
+   * Exemplo 1 — só observar.
+   * O que faz: espia Number.isFinite, que o calcularImc usa para validar peso e altura.
+   * Por quê: prova que a função realmente valida as DUAS entradas, sem alterar nada.
+   * Esperado: IMC 25 (cálculo real) e isFinite chamado 2 vezes: com 100 e com 2 -> verde.
+   */
+  it('observa as validações feitas por calcularImc', () => {
+    // Arrange
+    const espiao = vi.spyOn(Number, 'isFinite');
+
+    // Act
+    const imc = calcularImc(100, 2);
+
+    // Assert
+    expect(imc).toBe(25);
+    expect(espiao).toHaveBeenCalledTimes(2);
+    expect(espiao).toHaveBeenCalledWith(100);
+    expect(espiao).toHaveBeenCalledWith(2);
+  });
+
+  /*
+   * Exemplo 2 — sobrescrever temporariamente.
+   * O que faz: força Number.isFinite a responder sempre false.
+   * Por quê: simula "valores inválidos" sem mudar a entrada, provando que calcularImc
+   * depende dessa validação para devolver null.
+   * Esperado: calcularImc(100, 2) devolve null -> verde.
+   */
+  it('força a validação a falhar com mockReturnValue', () => {
+    vi.spyOn(Number, 'isFinite').mockReturnValue(false);
+
+    const imc = calcularImc(100, 2);
+
+    expect(imc).toBeNull();
+  });
+
+  /*
+   * Exemplo 3 — o restoreAllMocks funcionou.
+   * O que faz: calcula de novo, depois do teste que "quebrou" o Number.isFinite.
+   * Por quê: se o afterEach não restaurasse, este cálculo daria null.
+   * Esperado: 25 (método original de volta) -> verde.
+   */
+  it('depois do restoreAllMocks, o Number.isFinite original voltou', () => {
+    expect(calcularImc(100, 2)).toBe(25);
+  });
+});
