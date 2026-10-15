@@ -167,3 +167,31 @@ describe('calcularImc — toBeCloseTo', () => {
     expect(imc).toBeCloseTo(22.86, 2);
   });
 });
+
+/* ==========================================================================================
+ * TEST.8 — toBeNull(): "sem resultado"  (slide 22)
+ *
+ * toBeNull confere se o valor é exatamente null. As funções do IMC devolvem null quando a
+ * entrada não permite calcular: é o caso de borda pedido no slide 29 (nulos, zero, inválidos).
+ * ======================================================================================== */
+describe('calcularImc e classificarImc — toBeNull', () => {
+  it('devolve null para peso zero', () => {
+    expect(calcularImc(0, 1.75)).toBeNull();
+  });
+
+  it('devolve null para peso ou altura negativos', () => {
+    expect(calcularImc(-70, 1.75)).toBeNull();
+    expect(calcularImc(70, -1.75)).toBeNull();
+  });
+
+  it('devolve null para valores que não são números finitos', () => {
+    expect(calcularImc(NaN, 1.75)).toBeNull();
+    expect(calcularImc(70, Infinity)).toBeNull();
+    expect(calcularImc('70', 1.75)).toBeNull();
+  });
+
+  it('classificarImc devolve null para IMC null ou NaN', () => {
+    expect(classificarImc(null)).toBeNull();
+    expect(classificarImc(NaN)).toBeNull();
+  });
+});
