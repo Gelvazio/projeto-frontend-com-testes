@@ -219,3 +219,24 @@ describe('imc.js — toBeDefined', () => {
     expect(faixa).not.toBeNull();
   });
 });
+
+/* ==========================================================================================
+ * TEST.10 — toBeGreaterThan(): comparação numérica  (slide 22)
+ *
+ * toBeGreaterThan(n) confere valor > n. A família também tem toBeGreaterThanOrEqual,
+ * toBeLessThan e toBeLessThanOrEqual. Úteis para limites mínimos e máximos.
+ * ======================================================================================== */
+describe('imc.js — toBeGreaterThan', () => {
+  it('120 kg e 1,70 m dá IMC (~41,5) acima do limite da obesidade grau II', () => {
+    const imc = calcularImc(120, 1.7);
+
+    expect(imc).toBeGreaterThan(IMC_LIMITE_OBESIDADE_II);
+  });
+
+  it('os limites das faixas estão em ordem crescente', () => {
+    expect(IMC_LIMITE_PESO_NORMAL).toBeGreaterThan(IMC_LIMITE_ABAIXO_DO_PESO);
+    expect(IMC_LIMITE_SOBREPESO).toBeGreaterThan(IMC_LIMITE_PESO_NORMAL);
+    expect(IMC_LIMITE_OBESIDADE_I).toBeGreaterThan(IMC_LIMITE_SOBREPESO);
+    expect(IMC_LIMITE_OBESIDADE_II).toBeGreaterThan(IMC_LIMITE_OBESIDADE_I);
+  });
+});
