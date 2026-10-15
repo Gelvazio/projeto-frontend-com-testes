@@ -392,3 +392,69 @@ describe('calcularImc — beforeEach e afterEach', () => {
     expect(execucoesDoBeforeEach).toBe(3);
   });
 });
+
+/* ==========================================================================================
+ * TEST.14 — vi.fn(): função simulada  (slide 26)
+ *
+ * vi.fn() cria uma função "de mentira" que MEMORIZA cada chamada: quantas vezes foi
+ * chamada, com quais argumentos e o que devolveu. Pode receber uma implementação
+ * (vi.fn(funcaoReal)) ou ter o retorno programado (mockReturnValue).
+ * Matchers próprios: toHaveBeenCalled, toHaveBeenCalledTimes(n), toHaveBeenCalledWith(...).
+ * No IMC não há dependência externa para isolar, então os exemplos são didáticos: o uso
+ * típico é substituir uma API, um callback ou um alerta (ver TEST.17).
+ * ======================================================================================== */
+describe('classificarImc — vi.fn()', () => {
+  /*
+   * Exemplo 1 — embrulhar a função real para observá-la.
+   * O que faz: cria espiao = vi.fn(classificarImc); o espião executa a função de verdade e
+   * ainda anota a chamada.
+   * Por quê: mostra os 3 registros do vi.fn — chamada, argumento e retorno.
+   * Esperado: chamado 1 vez, com 22.86, devolvendo 'Peso normal' -> verde.
+   */
+  it('registra a chamada, o argumento e o retorno', () => {
+    // Arrange
+    const espiao = vi.fn(classificarImc);
+
+    // Act
+    const faixa = espiao(22.86);
+
+    // Assert
+    expect(espiao).toHaveBeenCalled();
+    expect(espiao).toHaveBeenCalledTimes(1);
+    expect(espiao).toHaveBeenCalledWith(22.86);
+    expect(faixa).toBe('Peso normal');
+  });
+
+  /*
+   * Exemplo 2 — usar o vi.fn como callback.
+   * O que faz: passa o espião para o map de uma lista de 3 IMCs.
+   * Por quê: callbacks são o lugar mais comum de vi.fn — conferimos que o map chamou a
+   * função uma vez por item. (O map passa 3 argumentos: item, índice e array; por isso o
+   * toHaveBeenNthCalledWith lista os três.)
+   * Esperado: 3 chamadas; a 2ª com (27, 1, imcs) -> verde.
+   */
+  it('conta as chamadas feitas pelo map', () => {
+    const espiao = vi.fn(classificarImc);
+    const imcs = [17, 27, 41];
+
+    imcs.map(espiao);
+
+    expect(espiao).toHaveBeenCalledTimes(3);
+    expect(espiao).toHaveBeenNthCalledWith(2, 27, 1, imcs);
+  });
+
+  /*
+   * Exemplo 3 — programar o retorno.
+   * O que faz: cria um vi.fn() sem implementação e manda devolver sempre 'Sobrepeso'.
+   * Por quê: é assim que se finge uma dependência (ex.: uma API) com resposta controlada.
+   * Esperado: devolve 'Sobrepeso' mesmo recebendo 17 -> verde.
+   */
+  it('devolve um valor programado com mockReturnValue', () => {
+    const classificadorFalso = vi.fn().mockReturnValue('Sobrepeso');
+
+    const faixa = classificadorFalso(17);
+
+    expect(faixa).toBe('Sobrepeso');
+    expect(classificadorFalso).toHaveBeenCalledWith(17);
+  });
+});
