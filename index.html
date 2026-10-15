@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="claro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projeto Frontend com Testes</title>
+    <link rel="stylesheet" href="css/estilo.css" />
+  </head>
+  <body>
+    <header class="cabecalho">
+      <div>
+        <h1 class="cabecalho__titulo">Projeto Frontend com Testes</h1>
+        <p class="cabecalho__subtitulo">
+          Mescla dos projetos dos alunos: IMC, lâmpada, loja e tema.
+        </p>
+      </div>
+      <button class="botao" id="botao-tema" type="button">Dark Mode</button>
+    </header>
+
+    <main class="conteudo">
+      <section class="cartao" aria-labelledby="titulo-imc">
+        <h2 id="titulo-imc">Calculadora de IMC</h2>
+        <form class="formulario" id="formulario-imc">
+          <label class="campo">Nome
+            <input name="nome" type="text" autocomplete="off" />
+          </label>
+          <label class="campo">Altura (m)
+            <input name="altura" type="number" step="0.01" min="0" placeholder="1.75" />
+          </label>
+          <label class="campo">Peso (kg)
+            <input name="peso" type="number" step="0.1" min="0" placeholder="70" />
+          </label>
+          <button class="botao" type="submit">Calcular</button>
+        </form>
+        <p class="resultado" id="resultado-imc" aria-live="polite"></p>
+      </section>
+
+      <section class="cartao" aria-labelledby="titulo-lampada">
+        <h2 id="titulo-lampada">Lâmpada</h2>
+        <div class="lampada" id="lampada" role="img" aria-label="Lâmpada"></div>
+        <p class="dica">Passe o mouse para inverter; clique duas vezes para quebrar.</p>
+        <div class="acoes">
+          <button class="botao" id="lampada-ligar" type="button">Ligar</button>
+          <button class="botao botao--secundario" id="lampada-desligar" type="button">
+            Desligar
+          </button>
+        </div>
+      </section>
+
+      <section class="cartao cartao--largo" aria-labelledby="titulo-loja">
+        <h2 id="titulo-loja">Loja</h2>
+        <div class="filtros">
+          <label class="campo">Buscar
+            <input id="busca" type="search" placeholder="Nome do produto" />
+          </label>
+          <label class="campo">Categoria
+            <select id="categoria"></select>
+          </label>
+        </div>
+        <div class="loja">
+          <ul class="vitrine" id="vitrine"></ul>
+          <aside class="carrinho" aria-label="Carrinho">
+            <h3>Carrinho (<span id="carrinho-contador">0</span>)</h3>
+            <ul class="carrinho__lista" id="carrinho-itens"></ul>
+            <p class="carrinho__total">Total: <strong id="carrinho-total">R$ 0,00</strong></p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <p>A lógica está em js/imc.js, lampada.js, carrinho.js e tema.js (funções puras).</p>
+    </footer>
+
+    <script src="js/imc.js"></script>
+    <script src="js/lampada.js"></script>
+    <script src="js/carrinho.js"></script>
+    <script src="js/dados-produtos.js"></script>
+    <script src="js/tema.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
