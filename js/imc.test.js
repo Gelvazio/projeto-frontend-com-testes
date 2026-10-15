@@ -274,3 +274,57 @@ describe('classificarImc — toEqual', () => {
     expect(resultado).toEqual({ imc: 25, faixa: 'Sobrepeso' });
   });
 });
+
+/* ==========================================================================================
+ * TEST.12 — toContain(): item dentro de uma lista ou trecho dentro de um texto
+ *           (slides 22 a 24)
+ *
+ * toContain(item) passa se o array TEM o item (compara com ===) ou se o texto TEM o trecho.
+ * É a resposta do quiz do slide 23: para saber se ['ADMIN', 'EDITOR'] contém 'ADMIN', o
+ * certo é expect(permissoes).toContain('ADMIN') — toBe e toEqual comparariam a lista inteira.
+ * ======================================================================================== */
+describe('classificarImc — toContain', () => {
+  /*
+   * Exemplo 1 — item numa lista.
+   * O que faz: classifica três IMCs (17, 22 e 31) e guarda os rótulos num array.
+   * Por quê: queremos saber só se "Peso normal" aparece, sem depender da posição nem dos
+   * outros itens. toEqual exigiria escrever o array inteiro; toContain olha um item só.
+   * Esperado: o array ['Abaixo do peso', 'Peso normal', 'Obesidade grau I'] contém
+   * 'Peso normal' -> verde.
+   */
+  it('a lista de faixas geradas contém "Peso normal"', () => {
+    // Arrange
+    const imcs = [17, 22, 31];
+
+    // Act
+    const faixas = imcs.map(classificarImc);
+
+    // Assert
+    expect(faixas).toContain('Peso normal');
+  });
+
+  /*
+   * Exemplo 2 — o contrário, com .not.
+   * O que faz: classifica só IMCs saudáveis (19 e 24).
+   * Por quê: garante que nenhuma faixa de obesidade aparece para quem está no peso normal.
+   * Esperado: a lista não contém 'Obesidade grau I' -> verde.
+   */
+  it('a lista de pessoas no peso normal não contém faixa de obesidade', () => {
+    const faixas = [19, 24].map(classificarImc);
+
+    expect(faixas).not.toContain('Obesidade grau I');
+  });
+
+  /*
+   * Exemplo 3 — trecho dentro de um texto.
+   * O que faz: classifica IMC 37 e confere só um pedaço do rótulo.
+   * Por quê: as faixas de obesidade têm graus I, II e III; aqui interessa apenas que é uma
+   * obesidade. Para textos, toContain procura o trecho (como String.includes).
+   * Esperado: 'Obesidade grau II' contém 'Obesidade' -> verde.
+   */
+  it('o rótulo de IMC 37 contém a palavra "Obesidade"', () => {
+    const faixa = classificarImc(37);
+
+    expect(faixa).toContain('Obesidade');
+  });
+});
