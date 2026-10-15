@@ -85,3 +85,39 @@ describe('calcularImc — expect', () => {
     expect(imc).not.toBe(24.9);
   });
 });
+
+/* ==========================================================================================
+ * TEST.5 — Padrão AAA: Arrange, Act, Assert  (slides 16 a 19)
+ *
+ * Organiza o raciocínio de TODO teste em 3 fases, sempre nesta ordem:
+ *   1. Arrange (preparar): dados de entrada, variáveis e mocks;
+ *   2. Act (agir): chamar a função testada — de preferência em UMA linha;
+ *   3. Assert (validar): conferir o retorno com expect.
+ * Separar as fases com comentário ou linha em branco deixa o teste autoexplicativo.
+ * (No slide 18, a etapa "liberar instâncias e registrar cobertura" vem depois, fora do AAA.)
+ * ======================================================================================== */
+describe('calcularImc — padrão AAA', () => {
+  it('calcula o IMC de 90 kg e 1,5 m', () => {
+    // Arrange
+    const peso = 90;
+    const altura = 1.5;
+
+    // Act
+    const imc = calcularImc(peso, altura);
+
+    // Assert
+    expect(imc).toBe(40);
+  });
+
+  it('devolve null quando a altura é zero (evita divisão por zero)', () => {
+    // Arrange
+    const peso = 70;
+    const altura = 0;
+
+    // Act
+    const imc = calcularImc(peso, altura);
+
+    // Assert
+    expect(imc).toBe(null);
+  });
+});
