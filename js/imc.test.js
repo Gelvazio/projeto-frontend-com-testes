@@ -145,3 +145,25 @@ describe('classificarImc — toBe', () => {
     expect(classificarImc(25)).toBe('Sobrepeso');
   });
 });
+
+/* ==========================================================================================
+ * TEST.7 — toBeCloseTo(): números decimais
+ *
+ * O computador guarda decimais de forma aproximada: 0.1 + 0.2 dá 0.30000000000000004.
+ * Por isso toBe falha com decimais "quebrados". toBeCloseTo(esperado, casas) aceita uma
+ * diferença mínima; o 2º argumento diz quantas casas decimais precisam bater (padrão: 2).
+ * ======================================================================================== */
+describe('calcularImc — toBeCloseTo', () => {
+  it('mostra por que toBe não serve para decimais', () => {
+    const soma = 0.1 + 0.2;
+
+    expect(soma).not.toBe(0.3);
+    expect(soma).toBeCloseTo(0.3);
+  });
+
+  it('calcula ~22,86 para 70 kg e 1,75 m', () => {
+    const imc = calcularImc(70, 1.75);
+
+    expect(imc).toBeCloseTo(22.86, 2);
+  });
+});
