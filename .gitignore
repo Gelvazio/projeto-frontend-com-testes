@@ -1,6 +1,4 @@
 node_modules/
 
 # Relatórios gerados pelos testes (npm run test:coverage e test:report)
-coverage/
-html/
 .vitest/

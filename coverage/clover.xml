@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1792071020943" clover="3.2.0">
+  <project timestamp="1792071020943" name="All files">
+    <metrics statements="177" coveredstatements="25" conditionals="76" coveredconditionals="21" methods="51" coveredmethods="4" elements="304" coveredelements="50" complexity="0" loc="177" ncloc="177" packages="1" files="7" classes="7"/>
+    <file name="app.js" path="C:\fontes\testes-de-frontend\aulas\projeto-frontend-com-testes\js\app.js">
+      <metrics statements="105" coveredstatements="0" conditionals="17" coveredconditionals="0" methods="31" coveredmethods="0"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
+      <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="21" count="0" type="stmt"/>
+      <line num="29" count="0" type="stmt"/>
+      <line num="34" count="0" type="stmt"/>
+      <line num="35" count="0" type="stmt"/>
+      <line num="37" count="0" type="stmt"/>
+      <line num="38" count="0" type="stmt"/>
+      <line num="39" count="0" type="stmt"/>
+      <line num="40" count="0" type="stmt"/>
+      <line num="41" count="0" type="stmt"/>
+      <line num="43" count="0" type="stmt"/>
+      <line num="44" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="45" count="0" type="stmt"/>
+      <line num="46" count="0" type="stmt"/>
+      <line num="48" count="0" type="stmt"/>
+      <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="50" count="0" type="stmt"/>
+      <line num="56" count="0" type="stmt"/>
+      <line num="57" count="0" type="stmt"/>
+      <line num="64" count="0" type="stmt"/>
+      <line num="65" count="0" type="stmt"/>
+      <line num="68" count="0" type="stmt"/>
+      <line num="69" count="0" type="stmt"/>
+      <line num="71" count="0" type="stmt"/>
+      <line num="72" count="0" type="stmt"/>
+      <line num="73" count="0" type="stmt"/>
+      <line num="74" count="0" type="stmt"/>
+      <line num="75" count="0" type="stmt"/>
+      <line num="85" count="0" type="stmt"/>
+      <line num="86" count="0" type="stmt"/>
+      <line num="87" count="0" type="stmt"/>
+      <line num="88" count="0" type="stmt"/>
+      <line num="90" count="0" type="stmt"/>
+      <line num="96" count="0" type="stmt"/>
+      <line num="106" count="0" type="stmt"/>
+      <line num="107" count="0" type="stmt"/>
+      <line num="108" count="0" type="stmt"/>
+      <line num="109" count="0" type="stmt"/>
+      <line num="110" count="0" type="stmt"/>
+      <line num="112" count="0" type="stmt"/>
+      <line num="113" count="0" type="stmt"/>
+      <line num="114" count="0" type="stmt"/>
+      <line num="122" count="0" type="stmt"/>
+      <line num="123" count="0" type="stmt"/>
+      <line num="124" count="0" type="stmt"/>
+      <line num="125" count="0" type="stmt"/>
+      <line num="127" count="0" type="stmt"/>
+      <line num="128" count="0" type="stmt"/>
+      <line num="129" count="0" type="stmt"/>
+      <line num="139" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="140" count="0" type="stmt"/>
+      <line num="141" count="0" type="stmt"/>
+      <line num="142" count="0" type="stmt"/>
+      <line num="144" count="0" type="stmt"/>
+      <line num="145" count="0" type="stmt"/>
+      <line num="150" count="0" type="stmt"/>
+      <line num="151" count="0" type="stmt"/>
+      <line num="152" count="0" type="stmt"/>
+      <line num="153" count="0" type="stmt"/>
+      <line num="154" count="0" type="stmt"/>
+      <line num="155" count="0" type="stmt"/>
+      <line num="156" count="0" type="stmt"/>
+      <line num="160" count="0" type="stmt"/>
+      <line num="161" count="0" type="stmt"/>
+      <line num="162" count="0" type="stmt"/>
+      <line num="163" count="0" type="stmt"/>
+      <line num="166" count="0" type="stmt"/>
+      <line num="167" count="0" type="stmt"/>
+      <line num="168" count="0" type="stmt"/>
+      <line num="173" count="0" type="stmt"/>
+      <line num="177" count="0" type="stmt"/>
+      <line num="178" count="0" type="stmt"/>
+      <line num="179" count="0" type="stmt"/>
+      <line num="180" count="0" type="stmt"/>
+      <line num="183" count="0" type="stmt"/>
+      <line num="186" count="0" type="stmt"/>
+      <line num="187" count="0" type="stmt"/>
+      <line num="188" count="0" type="stmt"/>
+      <line num="189" count="0" type="stmt"/>
+      <line num="190" count="0" type="stmt"/>
+      <line num="198" count="0" type="stmt"/>
+      <line num="199" count="0" type="stmt"/>
+      <line num="200" count="0" type="cond" truecount="0" falsecount="4"/>
+      <line num="204" count="0" type="stmt"/>
+      <line num="205" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="210" count="0" type="stmt"/>
+      <line num="211" count="0" type="stmt"/>
+      <line num="215" count="0" type="stmt"/>
+      <line num="216" count="0" type="stmt"/>
+      <line num="219" count="0" type="stmt"/>
+      <line num="220" count="0" type="stmt"/>
+      <line num="221" count="0" type="stmt"/>
+      <line num="222" count="0" type="stmt"/>
+      <line num="223" count="0" type="stmt"/>
+      <line num="228" count="0" type="stmt"/>
+      <line num="231" count="0" type="stmt"/>
+      <line num="232" count="0" type="stmt"/>
+      <line num="233" count="0" type="stmt"/>
+      <line num="234" count="0" type="stmt"/>
+    </file>
+    <file name="carrinho.js" path="C:\fontes\testes-de-frontend\aulas\projeto-frontend-com-testes\js\carrinho.js">
+      <metrics statements="17" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="12" coveredmethods="0"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="16" count="0" type="stmt"/>
+      <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="19" count="0" type="stmt"/>
+      <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="33" count="0" type="stmt"/>
+      <line num="42" count="0" type="stmt"/>
+      <line num="51" count="0" type="stmt"/>
+      <line num="61" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="62" count="0" type="stmt"/>
+      <line num="64" count="0" type="stmt"/>
+      <line num="65" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="66" count="0" type="stmt"/>
+      <line num="67" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="77" count="0" type="stmt"/>
+      <line num="81" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="82" count="0" type="stmt"/>
+    </file>
+    <file name="dados-produtos.js" path="C:\fontes\testes-de-frontend\aulas\projeto-frontend-com-testes\js\dados-produtos.js">
+      <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="27" count="0" type="stmt"/>
+    </file>
+    <file name="imc-servico.js" path="C:\fontes\testes-de-frontend\aulas\projeto-frontend-com-testes\js\imc-servico.js">
+      <metrics statements="9" coveredstatements="9" conditionals="8" coveredconditionals="6" methods="1" coveredmethods="1"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="13" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="25" count="8" type="cond" truecount="2" falsecount="0"/>
+      <line num="27" count="6" type="stmt"/>
+      <line num="28" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="30" count="3" type="stmt"/>
+      <line num="34" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="35" count="1" type="stmt"/>
+    </file>
+    <file name="imc.js" path="C:\fontes\testes-de-frontend\aulas\projeto-frontend-com-testes\js\imc.js">
+      <metrics statements="16" coveredstatements="16" conditionals="16" coveredconditionals="15" methods="3" coveredmethods="3"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="29" count="20" type="cond" truecount="2" falsecount="0"/>
+      <line num="30" count="20" type="cond" truecount="2" falsecount="0"/>
+      <line num="31" count="16" type="cond" truecount="4" falsecount="0"/>
+      <line num="33" count="12" type="stmt"/>
+      <line num="42" count="21" type="cond" truecount="4" falsecount="0"/>
+      <line num="44" count="45" type="stmt"/>
+      <line num="45" count="19" type="cond" truecount="2" falsecount="0"/>
+      <line num="49" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="50" count="1" type="stmt"/>
+    </file>
+    <file name="lampada.js" path="C:\fontes\testes-de-frontend\aulas\projeto-frontend-com-testes\js\lampada.js">
+      <metrics statements="18" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="10" count="0" type="stmt"/>
+      <line num="11" count="0" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="17" count="0" type="stmt"/>
+      <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="41" count="0" type="stmt"/>
+      <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="46" count="0" type="stmt"/>
+    </file>
+    <file name="tema.js" path="C:\fontes\testes-de-frontend\aulas\projeto-frontend-com-testes\js\tema.js">
+      <metrics statements="8" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+      <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="31" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>
