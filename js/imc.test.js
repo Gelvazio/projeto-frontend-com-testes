@@ -24,6 +24,14 @@ import {
  * describe para subdividir (ex.: "casos válidos" e "casos inválidos").
  * it.todo registra um caso PLANEJADO: aparece no relatório como "todo" e não falha.
  * ======================================================================================== */
+/*
+ * Exemplo 1 — suite com sub-suites.
+ * O que faz: cria a suite calcularImc com duas sub-suites (casos válidos e inválidos), cada uma com
+ *   um it.todo (caso planejado).
+ * Por quê: o relatório sai em árvore (calcularImc > casos válidos > ...) e mostra qual parte
+ *   falhou.
+ * Esperado: nada falha; os casos aparecem como "todo".
+ */
 describe('calcularImc', () => {
   describe('casos válidos', () => {
     it.todo('calcula peso / (altura * altura)');
@@ -34,6 +42,12 @@ describe('calcularImc', () => {
   });
 });
 
+/*
+ * Exemplo 2 — uma suite por função.
+ * O que faz: cria a suite classificarImc, separada da anterior.
+ * Por quê: cada função do módulo tem a sua suite; os casos reais vêm a partir da TEST.3.
+ * Esperado: 1 caso "todo", sem falha.
+ */
 describe('classificarImc', () => {
   it.todo('devolve o nome de uma das 6 faixas');
 });
@@ -49,6 +63,12 @@ describe('classificarImc', () => {
  *   Then (então)   -> o resultado esperado e mensurável: o expect.
  * ======================================================================================== */
 describe('calcularImc — casos BDD com it e test', () => {
+  /*
+   * Exemplo 1 — caso BDD com it.
+   * O que faz: o título é a frase BDD e o corpo marca Given, When e Then.
+   * Por quê: quem lê o relatório entende a regra sem abrir o código.
+   * Esperado: 100 / (2 * 2) = 25 -> verde.
+   */
   it('dado 100 kg e 2 m, quando calcula o IMC, então o resultado é 25', () => {
     // Given
     const peso = 100;
@@ -59,6 +79,12 @@ describe('calcularImc — casos BDD com it e test', () => {
     expect(imc).toBe(25);
   });
 
+  /*
+   * Exemplo 2 — o mesmo caso com test.
+   * O que faz: usa test no lugar de it, em uma linha.
+   * Por quê: it e test são idênticos; escolha um e mantenha o padrão no projeto.
+   * Esperado: 80 / (2 * 2) = 20 -> verde.
+   */
   test('dado 80 kg e 2 m, quando calcula o IMC, então o resultado é 20 (test = it)', () => {
     expect(calcularImc(80, 2)).toBe(20);
   });
@@ -76,6 +102,12 @@ describe('calcularImc — casos BDD com it e test', () => {
  * contra o teste "verde" que não conferiu nada (teste sem expect = falsa segurança).
  * ======================================================================================== */
 describe('calcularImc — expect', () => {
+  /*
+   * Exemplo 1 — expect, .not e assertions.
+   * O que faz: expect.assertions(2) exige 2 asserções; confere que o IMC é 25 e que NÃO é 24.9.
+   * Por quê: mostra o expect positivo, o negativo (.not) e a proteção contra teste sem asserção.
+   * Esperado: as 2 asserções rodam e passam -> verde.
+   */
   it('confere o resultado com expect e com .not', () => {
     expect.assertions(2);
 
@@ -97,6 +129,12 @@ describe('calcularImc — expect', () => {
  * (No slide 18, a etapa "liberar instâncias e registrar cobertura" vem depois, fora do AAA.)
  * ======================================================================================== */
 describe('calcularImc — padrão AAA', () => {
+  /*
+   * Exemplo 1 — AAA no caminho feliz.
+   * O que faz: prepara peso e altura (Arrange), calcula em uma linha (Act) e confere (Assert).
+   * Por quê: as 3 fases separadas deixam o teste legível para qualquer colega.
+   * Esperado: 90 / (1,5 * 1,5) = 40 -> verde.
+   */
   it('calcula o IMC de 90 kg e 1,5 m', () => {
     // Arrange
     const peso = 90;
@@ -109,6 +147,13 @@ describe('calcularImc — padrão AAA', () => {
     expect(imc).toBe(40);
   });
 
+  /*
+   * Exemplo 2 — AAA num caso de borda.
+   * O que faz: mesma estrutura AAA com altura 0.
+   * Por quê: o padrão vale também para erros: dividir por zero daria Infinity, a função devolve
+   *   null.
+   * Esperado: null -> verde.
+   */
   it('devolve null quando a altura é zero (evita divisão por zero)', () => {
     // Arrange
     const peso = 70;
@@ -129,18 +174,36 @@ describe('calcularImc — padrão AAA', () => {
  * números, textos (strings) e booleanos. Para objetos e arrays, use toEqual (TEST.11).
  * ======================================================================================== */
 describe('classificarImc — toBe', () => {
+  /*
+   * Exemplo 1 — toBe com texto.
+   * O que faz: classifica 17 e compara o rótulo com toBe.
+   * Por quê: texto é primitivo: === compara o conteúdo.
+   * Esperado: 'Abaixo do peso' -> verde.
+   */
   it('classifica IMC 17 como "Abaixo do peso" (texto é primitivo)', () => {
     const faixa = classificarImc(17);
 
     expect(faixa).toBe('Abaixo do peso');
   });
 
+  /*
+   * Exemplo 2 — toBe com número exato.
+   * O que faz: calcula 100 kg e 2 m.
+   * Por quê: a divisão é exata, então toBe funciona (com decimais, ver TEST.7).
+   * Esperado: 25 -> verde.
+   */
   it('calcula exatamente 25 para 100 kg e 2 m (número exato)', () => {
     const imc = calcularImc(100, 2);
 
     expect(imc).toBe(25);
   });
 
+  /*
+   * Exemplo 3 — toBe no limite.
+   * O que faz: classifica exatamente 25, o limite entre Peso normal e Sobrepeso.
+   * Por quê: limites são onde os erros aparecem (< trocado por <=).
+   * Esperado: 'Sobrepeso' -> verde.
+   */
   it('o limite de uma faixa pertence à faixa de cima: 25 já é "Sobrepeso"', () => {
     expect(classificarImc(25)).toBe('Sobrepeso');
   });
@@ -154,6 +217,12 @@ describe('classificarImc — toBe', () => {
  * diferença mínima; o 2º argumento diz quantas casas decimais precisam bater (padrão: 2).
  * ======================================================================================== */
 describe('calcularImc — toBeCloseTo', () => {
+  /*
+   * Exemplo 1 — o problema do decimal.
+   * O que faz: soma 0.1 + 0.2 e compara com 0.3 das duas formas.
+   * Por quê: prova que toBe falharia (0.30000000000000004) e que toBeCloseTo resolve.
+   * Esperado: not.toBe e toBeCloseTo passam -> verde.
+   */
   it('mostra por que toBe não serve para decimais', () => {
     const soma = 0.1 + 0.2;
 
@@ -161,6 +230,12 @@ describe('calcularImc — toBeCloseTo', () => {
     expect(soma).toBeCloseTo(0.3);
   });
 
+  /*
+   * Exemplo 2 — toBeCloseTo no IMC real.
+   * O que faz: calcula 70 kg e 1,75 m (22,857142...).
+   * Por quê: o resultado é uma dízima; conferimos só 2 casas decimais.
+   * Esperado: ≈ 22,86 -> verde.
+   */
   it('calcula ~22,86 para 70 kg e 1,75 m', () => {
     const imc = calcularImc(70, 1.75);
 
@@ -175,21 +250,45 @@ describe('calcularImc — toBeCloseTo', () => {
  * entrada não permite calcular: é o caso de borda pedido no slide 29 (nulos, zero, inválidos).
  * ======================================================================================== */
 describe('calcularImc e classificarImc — toBeNull', () => {
+  /*
+   * Exemplo 1 — peso zero.
+   * O que faz: calcula com peso 0.
+   * Por quê: peso zero não é uma pessoa real; a função recusa.
+   * Esperado: null -> verde.
+   */
   it('devolve null para peso zero', () => {
     expect(calcularImc(0, 1.75)).toBeNull();
   });
 
+  /*
+   * Exemplo 2 — valores negativos.
+   * O que faz: testa peso negativo e altura negativa.
+   * Por quê: altura negativa ao quadrado daria um IMC positivo e errado; a validação barra.
+   * Esperado: null nos dois casos -> verde.
+   */
   it('devolve null para peso ou altura negativos', () => {
     expect(calcularImc(-70, 1.75)).toBeNull();
     expect(calcularImc(70, -1.75)).toBeNull();
   });
 
+  /*
+   * Exemplo 3 — não numéricos.
+   * O que faz: testa NaN, Infinity e o texto '70'.
+   * Por quê: dados vindos de formulário podem chegar como texto ou NaN.
+   * Esperado: null nos três casos -> verde.
+   */
   it('devolve null para valores que não são números finitos', () => {
     expect(calcularImc(NaN, 1.75)).toBeNull();
     expect(calcularImc(70, Infinity)).toBeNull();
     expect(calcularImc('70', 1.75)).toBeNull();
   });
 
+  /*
+   * Exemplo 4 — classificar inválido.
+   * O que faz: classifica null e NaN.
+   * Por quê: garante que o null de calcularImc não vira uma faixa falsa.
+   * Esperado: null nos dois casos -> verde.
+   */
   it('classificarImc devolve null para IMC null ou NaN', () => {
     expect(classificarImc(null)).toBeNull();
     expect(classificarImc(NaN)).toBeNull();
@@ -204,6 +303,12 @@ describe('calcularImc e classificarImc — toBeNull', () => {
  * barrar null também, combine com .not.toBeNull().
  * ======================================================================================== */
 describe('imc.js — toBeDefined', () => {
+  /*
+   * Exemplo 1 — constantes exportadas.
+   * O que faz: confere que os 5 limites existem.
+   * Por quê: se alguém apagar um export, este teste avisa antes da tela quebrar.
+   * Esperado: todos definidos -> verde.
+   */
   it('exporta as constantes de limite das faixas', () => {
     expect(IMC_LIMITE_ABAIXO_DO_PESO).toBeDefined();
     expect(IMC_LIMITE_PESO_NORMAL).toBeDefined();
@@ -212,6 +317,12 @@ describe('imc.js — toBeDefined', () => {
     expect(IMC_LIMITE_OBESIDADE_II).toBeDefined();
   });
 
+  /*
+   * Exemplo 2 — definido e não nulo.
+   * O que faz: classifica 22 e confere toBeDefined e not.toBeNull.
+   * Por quê: toBeDefined sozinho aceitaria null; a combinação barra os dois.
+   * Esperado: 'Peso normal' -> verde.
+   */
   it('classificarImc devolve um valor definido e não nulo para um IMC válido', () => {
     const faixa = classificarImc(22);
 
@@ -227,12 +338,24 @@ describe('imc.js — toBeDefined', () => {
  * toBeLessThan e toBeLessThanOrEqual. Úteis para limites mínimos e máximos.
  * ======================================================================================== */
 describe('imc.js — toBeGreaterThan', () => {
+  /*
+   * Exemplo 1 — acima de um limite.
+   * O que faz: calcula 120 kg e 1,70 m (~41,5) e compara com o limite de 40.
+   * Por quê: o valor exato não importa aqui, só que passa do limite.
+   * Esperado: 41,5 > 40 -> verde.
+   */
   it('120 kg e 1,70 m dá IMC (~41,5) acima do limite da obesidade grau II', () => {
     const imc = calcularImc(120, 1.7);
 
     expect(imc).toBeGreaterThan(IMC_LIMITE_OBESIDADE_II);
   });
 
+  /*
+   * Exemplo 2 — ordem dos limites.
+   * O que faz: compara cada limite com o anterior.
+   * Por quê: classificarImc depende da ordem crescente; trocar um valor quebraria a classificação.
+   * Esperado: 18,5 < 25 < 30 < 35 < 40 -> verde.
+   */
   it('os limites das faixas estão em ordem crescente', () => {
     expect(IMC_LIMITE_PESO_NORMAL).toBeGreaterThan(IMC_LIMITE_ABAIXO_DO_PESO);
     expect(IMC_LIMITE_SOBREPESO).toBeGreaterThan(IMC_LIMITE_PESO_NORMAL);
@@ -250,6 +373,12 @@ describe('imc.js — toBeGreaterThan', () => {
  * Usar toBe em arrays/objetos é o erro mais comum de quem está começando.
  * ======================================================================================== */
 describe('classificarImc — toEqual', () => {
+  /*
+   * Exemplo 1 — array com toEqual.
+   * O que faz: classifica 17, 22 e 27 com map e compara o array inteiro.
+   * Por quê: toEqual confere item a item, na ordem.
+   * Esperado: ['Abaixo do peso', 'Peso normal', 'Sobrepeso'] -> verde.
+   */
   it('classifica uma lista de IMCs e compara o array inteiro com toEqual', () => {
     const imcs = [17, 22, 27];
 
@@ -258,6 +387,12 @@ describe('classificarImc — toEqual', () => {
     expect(faixas).toEqual(['Abaixo do peso', 'Peso normal', 'Sobrepeso']);
   });
 
+  /*
+   * Exemplo 2 — a armadilha da referência.
+   * O que faz: compara dois arrays de mesmo conteúdo com toBe e com toEqual.
+   * Por quê: são objetos diferentes na memória: toBe falha, toEqual passa.
+   * Esperado: not.toBe e toEqual passam -> verde.
+   */
   it('mostra a armadilha: mesmo conteúdo, referências diferentes', () => {
     const faixas = [17, 22].map(classificarImc);
     const esperado = ['Abaixo do peso', 'Peso normal'];
@@ -266,6 +401,12 @@ describe('classificarImc — toEqual', () => {
     expect(faixas).toEqual(esperado);
   });
 
+  /*
+   * Exemplo 3 — objeto com toEqual.
+   * O que faz: monta { imc, faixa } para 100 kg e 2 m.
+   * Por quê: toEqual também compara objetos, propriedade a propriedade.
+   * Esperado: { imc: 25, faixa: 'Sobrepeso' } -> verde.
+   */
   it('compara um objeto com o resultado de uma pessoa', () => {
     const imc = calcularImc(100, 2);
 
