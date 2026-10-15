@@ -240,3 +240,37 @@ describe('imc.js — toBeGreaterThan', () => {
     expect(IMC_LIMITE_OBESIDADE_II).toBeGreaterThan(IMC_LIMITE_OBESIDADE_I);
   });
 });
+
+/* ==========================================================================================
+ * TEST.11 — toEqual(): comparação profunda e a armadilha da referência  (slides 20 e 21)
+ *
+ * Arrays e objetos são comparados por REFERÊNCIA (endereço na memória). Dois arrays com o
+ * mesmo conteúdo, criados separadamente, são objetos diferentes: toBe FALHA.
+ * toEqual compara o CONTEÚDO, item a item (deep equality): é o certo para arrays e objetos.
+ * Usar toBe em arrays/objetos é o erro mais comum de quem está começando.
+ * ======================================================================================== */
+describe('classificarImc — toEqual', () => {
+  it('classifica uma lista de IMCs e compara o array inteiro com toEqual', () => {
+    const imcs = [17, 22, 27];
+
+    const faixas = imcs.map(classificarImc);
+
+    expect(faixas).toEqual(['Abaixo do peso', 'Peso normal', 'Sobrepeso']);
+  });
+
+  it('mostra a armadilha: mesmo conteúdo, referências diferentes', () => {
+    const faixas = [17, 22].map(classificarImc);
+    const esperado = ['Abaixo do peso', 'Peso normal'];
+
+    expect(faixas).not.toBe(esperado);
+    expect(faixas).toEqual(esperado);
+  });
+
+  it('compara um objeto com o resultado de uma pessoa', () => {
+    const imc = calcularImc(100, 2);
+
+    const resultado = { imc, faixa: classificarImc(imc) };
+
+    expect(resultado).toEqual({ imc: 25, faixa: 'Sobrepeso' });
+  });
+});
