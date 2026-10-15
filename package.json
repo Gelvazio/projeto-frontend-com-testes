@@ -1,3 +1,12 @@
 {
-  "type": "commonjs"
+  "name": "projeto-frontend-com-testes",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.4"
+  }
 }
