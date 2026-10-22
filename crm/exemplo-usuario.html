@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste de exemplo — usuario.js</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/estilo.css" />
+    <style>
+      .documento { max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; }
+      .documento h1 { font-family: var(--fonte-titulo); color: var(--cor-ciano); text-shadow: var(--brilho-ciano); }
+      .passo__n { display: inline-grid; place-items: center; width: 2em; height: 2em; margin-right: 8px; color: #05030d; background: var(--cor-magenta); border-radius: 50%; font-size: 0.8em; }
+      .documento pre { padding: 12px; overflow-x: auto; background: rgba(5, 3, 13, 0.85); border: 1px solid var(--cor-borda); border-radius: 6px; font-size: 0.85rem; line-height: 1.5; }
+      .documento code { font-family: var(--fonte-dados); color: var(--cor-ciano); }
+      .documento li { margin-bottom: 6px; }
+      .indice { columns: 2; }
+      .indice a, .documento a { color: var(--cor-ciano); }
+      .dica { padding: 8px 12px; border-left: 3px solid var(--cor-magenta); color: var(--cor-texto-suave); }
+      .checklist { list-style: none; padding-left: 0; }
+      .tabela td { vertical-align: top; }
+      @media (max-width: 720px) { .indice { columns: 1; } }
+    </style>
+  </head>
+  <body>
+    <div class="grade" aria-hidden="true"></div>
+    <main class="documento">
+      <p><a href="/atividade-sa.html">&larr; Voltar para a atividade</a></p>
+      <h1>Teste de exemplo: usuario.js</h1>
+      <p>Passo a passo de como escrever, do zero, o arquivo <code>src/usuario.test.js</code>.
+      Use este modelo e repita o caminho nos demais arquivos do CRM. Você atua como
+      <strong>aluno consultor</strong>: entrega um conjunto de testes automatizados que protege o
+      cadastro de usuários contra erros futuros.</p>
+      <section class="cartao">
+        <h2>Neste passo a passo</h2>
+        <ol class="indice"><li><a href="#passo-0">Preparar o ambiente</a></li><li><a href="#passo-1">Ler o código</a></li><li><a href="#passo-2">Planejar os casos</a></li><li><a href="#passo-3">Criar o arquivo e imports</a></li><li><a href="#passo-4">estaAtivo (AAA)</a></li><li><a href="#passo-5">validarUsuario</a></li><li><a href="#passo-6">Repositório com promessas</a></li><li><a href="#passo-7">Mock com vi.fn</a></li><li><a href="#passo-8">Tela com jsdom</a></li><li><a href="#passo-9">Rodar e ler o resultado</a></li><li><a href="#passo-10">Mutante sobrevivente</a></li><li><a href="#passo-11">Checklist</a></li></ol>
+        <p class="dica">O código dos passos 3 a 8 vem do arquivo
+        <code>src/usuario.exemplo.test.js</code>, que roda de verdade e está sempre passando.
+        No seu arquivo os caminhos de importação são os mesmos (<code>./usuario.js</code>).</p>
+      </section>
+      <section class="cartao passo" id="passo-0"><h2><span class="passo__n">0</span> Preparar o ambiente</h2>
+<p>Antes de escrever qualquer teste, confirme que o projeto roda. Abra o terminal na pasta
+<code>crm/</code> e execute:</p>
+<pre><code>npm install
+npm test</code></pre>
+<ul>
+<li><code>npm install</code> baixa o Vitest, o jsdom e o json-server (só na primeira vez).</li>
+<li><code>npm test</code> liga o Vitest em <strong>modo observação</strong>: ele roda os testes de novo
+sempre que você salva um arquivo. Para rodar uma vez e sair use <code>npm run test:run</code>.</li>
+<li>Para testar o <code>usuario.js</code> <strong>você não precisa ligar o json-server</strong>: os testes
+usam uma API falsa em memória (<code>api-falsa.js</code>).</li>
+</ul>
+<p class="dica">Regra do projeto: nada de <code>async</code>/<code>await</code>. As promessas são
+encadeadas com <code>.then()</code>.</p></section><section class="cartao passo" id="passo-1"><h2><span class="passo__n">1</span> Ler o código que será testado</h2>
+<p>Um bom teste começa pela <strong>leitura do código</strong> (visão de <em>caixa branca</em>): é lendo
+que descobrimos todos os caminhos que precisam de teste. Este é o <code>src/usuario.js</code>:</p><pre data-fonte="src/usuario.js" data-passo="1"><code>/** Cadastro de usuário (login). Dados no formato {id, login, senha, status}. */
+
+import { criarTelaCadastro } from &#x27;./tela.js&#x27;;
+
+export const COLECAO_USUARIOS = &#x27;usuarios&#x27;;
+export const STATUS_ATIVO = 1;
+export const STATUS_INATIVO = 0;
+export const CAMPOS_USUARIO = [
+  { nome: &#x27;login&#x27;, rotulo: &#x27;Login&#x27;, tipo: &#x27;text&#x27; },
+  { nome: &#x27;senha&#x27;, rotulo: &#x27;Senha&#x27;, tipo: &#x27;password&#x27; },
+  { nome: &#x27;status&#x27;, rotulo: &#x27;Status (1=ativo, 0=inativo)&#x27;, tipo: &#x27;number&#x27; },
+];
+const COLUNAS_USUARIO = [
+  { chave: &#x27;id&#x27;, rotulo: &#x27;ID&#x27; },
+  { chave: &#x27;login&#x27;, rotulo: &#x27;Login&#x27; },
+  { chave: &#x27;status&#x27;, rotulo: &#x27;Status&#x27; },
+];
+
+/**
+ * @param {{status: number}} usuario - Usuário.
+ * @returns {boolean} true quando o status é 1 (ativo).
+ */
+export function estaAtivo(usuario) {
+  return usuario.status === STATUS_ATIVO;
+}
+
+/**
+ * Confere os dados de um usuário.
+ * @param {{login: string, senha: string, status: number}} usuario - Dados.
+ * @returns {string[]} Lista de erros (vazia quando está tudo certo).
+ */
+export function validarUsuario(usuario) {
+  const erros = [];
+  if (!usuario.login) erros.push(&#x27;Login obrigatório&#x27;);
+  if (!usuario.senha) erros.push(&#x27;Senha obrigatória&#x27;);
+  const statusValido = usuario.status === STATUS_ATIVO || usuario.status === STATUS_INATIVO;
+  if (!statusValido) erros.push(&#x27;Status deve ser 1 ou 0&#x27;);
+  return erros;
+}
+
+/**
+ * Cria o repositório de usuários sobre a API injetada.
+ * @param {object} api - API injetada (json-server).
+ * @returns {{cadastrar: Function, listar: Function, buscarPorLogin: Function}} Repositório.
+ */
+export function criarRepositorioUsuarios(api) {
+  /** @param {string} login - Login procurado. @returns {Promise&lt;object|null&gt;} Usuário ou null. */
+  function buscarPorLogin(login) {
+    return api
+      .listar(COLECAO_USUARIOS)
+      .then((lista) =&gt; lista.find((usuario) =&gt; usuario.login === login) ?? null);
+  }
+
+  /**
+   * @param {object} dados - Dados do novo usuário.
+   * @returns {Promise&lt;object&gt;} Usuário salvo (recusa se inválido ou se o login já existe).
+   */
+  function cadastrar(dados) {
+    const erros = validarUsuario(dados);
+    if (erros.length &gt; 0) return Promise.reject(new Error(erros.join(&#x27;; &#x27;)));
+    return buscarPorLogin(dados.login).then((existente) =&gt; {
+      if (existente) throw new Error(&#x27;Login já cadastrado&#x27;);
+      return api.criar(COLECAO_USUARIOS, dados);
+    });
+  }
+
+  return { cadastrar, buscarPorLogin, listar: () =&gt; api.listar(COLECAO_USUARIOS) };
+}
+
+/**
+ * Monta a tela de usuários.
+ * @param {object} api - API injetada (json-server).
+ * @returns {HTMLElement} Seção da tela.
+ */
+export function criarTelaUsuario(api) {
+  const repositorio = criarRepositorioUsuarios(api);
+  return criarTelaCadastro({
+    titulo: &#x27;Usuários&#x27;,
+    campos: CAMPOS_USUARIO,
+    colunas: COLUNAS_USUARIO,
+    aoSalvar: (dados) =&gt; repositorio.cadastrar(dados),
+    aoListar: () =&gt; repositorio.listar(),
+  });
+}</code></pre>
+<p>O que existe para testar:</p>
+<table class="tabela"><thead><tr><td>Item</td><td>O que faz</td><td>Caminhos</td></tr></thead><tbody>
+<tr><td><code>estaAtivo(usuario)</code></td><td>Diz se o status é 1</td><td>status 1 · status diferente de 1</td></tr>
+<tr><td><code>validarUsuario(usuario)</code></td><td>Devolve a lista de erros</td><td>login vazio · senha vazia · status inválido · tudo certo</td></tr>
+<tr><td><code>criarRepositorioUsuarios(api).cadastrar</code></td><td>Valida, confere login repetido e grava</td><td>inválido · login repetido · sucesso</td></tr>
+<tr><td><code>...buscarPorLogin</code></td><td>Procura um login na lista</td><td>achou · não achou (<code>null</code>)</td></tr>
+<tr><td><code>criarTelaUsuario(api)</code></td><td>Monta a tela com formulário e tabela</td><td>lista sem mostrar a senha</td></tr>
+</tbody></table></section><section class="cartao passo" id="passo-2"><h2><span class="passo__n">2</span> Planejar os casos de teste</h2>
+<p>Antes do código, escreva no papel <strong>o que cada teste vai provar</strong>. Cada linha vira um
+<code>it(...)</code>. O <em>nome</em> do teste descreve o comportamento esperado.</p>
+<table class="tabela"><thead><tr><td>Função</td><td>Cenário</td><td>Entrada</td><td>Esperado</td><td>Matcher</td></tr></thead><tbody>
+<tr><td>estaAtivo</td><td>ativo</td><td>status 1</td><td><code>true</code></td><td><code>toBe</code></td></tr>
+<tr><td>estaAtivo</td><td>inativo</td><td>status 0</td><td><code>false</code></td><td><code>toBe</code></td></tr>
+<tr><td>validarUsuario</td><td>válido</td><td>ana / 123 / 1</td><td><code>[]</code></td><td><code>toEqual</code></td></tr>
+<tr><td>validarUsuario</td><td>sem login e senha</td><td>'' / '' / 1</td><td>2 erros</td><td><code>toEqual</code></td></tr>
+<tr><td>validarUsuario</td><td>status inválido (limites)</td><td>2, -1, '1', undefined</td><td>erro de status</td><td><code>toContain</code> + <code>it.each</code></td></tr>
+<tr><td>cadastrar</td><td>sucesso</td><td>usuário válido</td><td>encontrado depois, com id</td><td><code>toEqual</code></td></tr>
+<tr><td>buscarPorLogin</td><td>não existe</td><td>'ninguem'</td><td><code>null</code></td><td><code>toBeNull</code></td></tr>
+<tr><td>cadastrar</td><td>login repetido</td><td>mesmo usuário 2 vezes</td><td>recusa 'Login já cadastrado'</td><td><code>rejects.toThrow</code></td></tr>
+<tr><td>cadastrar</td><td>dados inválidos</td><td>'' / '' / 5</td><td>recusa e não grava</td><td><code>rejects.toThrow</code> + <code>toHaveLength</code></td></tr>
+<tr><td>cadastrar (mock)</td><td>login repetido</td><td>API falsa com <code>vi.fn()</code></td><td><code>criar</code> não é chamado</td><td><code>not.toHaveBeenCalled</code></td></tr>
+<tr><td>cadastrar (mock)</td><td>sucesso</td><td>API falsa com <code>vi.fn()</code></td><td><code>criar('usuarios', dados)</code></td><td><code>toHaveBeenCalledWith</code></td></tr>
+<tr><td>criarTelaUsuario</td><td>listar sem senha</td><td>1 usuário cadastrado</td><td>mostra o login, não a senha</td><td><code>toContain</code> / <code>not.toContain</code></td></tr>
+</tbody></table></section><section class="cartao passo" id="passo-3"><h2><span class="passo__n">3</span> Criar o arquivo e importar as ferramentas</h2>
+<p>Crie o arquivo <code>src/usuario.test.js</code> (mesma pasta e mesmo nome do código, mais
+<code>.test.js</code>) e comece pelos <code>import</code>:</p><pre data-fonte="src/usuario.exemplo.test.js" data-passo="3"><code>// 3.1 Ferramentas do Vitest: describe agrupa, it é um caso de teste, expect confere o resultado,
+//     beforeEach roda antes de cada teste e vi cria mocks (substitutos controlados).
+import { describe, it, expect, beforeEach, vi } from &#x27;vitest&#x27;;
+// 3.2 A API falsa guarda os dados em memória: o teste não precisa do json-server ligado.
+import { criarApiFalsa } from &#x27;./api-falsa.js&#x27;;
+// 3.3 O que vamos testar (o nome do arquivo de teste é o do código + &quot;.test.js&quot;).
+import {
+  criarRepositorioUsuarios, criarTelaUsuario, estaAtivo, validarUsuario,
+} from &#x27;./usuario.js&#x27;;
+
+// 3.4 Dado de apoio: um usuário válido que várias vezes serve de ponto de partida.
+const USUARIO_OK = { login: &#x27;ana&#x27;, senha: &#x27;123&#x27;, status: 1 };</code></pre><ul><li><code>describe</code> agrupa os testes de uma mesma unidade; <code>it</code> é um caso de teste.</li><li><code>expect(valor).matcher(esperado)</code> é a conferência (o <em>Assert</em>).</li><li><code>vi</code> é a caixa de ferramentas de mocks do Vitest.</li><li>A <strong>API falsa</strong> troca o json-server por dados em memória: o teste fica rápido e não depende de rede.</li></ul></section><section class="cartao passo" id="passo-4"><h2><span class="passo__n">4</span> Testar uma função simples: estaAtivo (padrão AAA)</h2>
+<p>Todo teste segue três etapas: <strong>Arrange</strong> (preparar), <strong>Act</strong> (agir) e
+<strong>Assert</strong> (conferir). Veja os comentários no código:</p><pre data-fonte="src/usuario.exemplo.test.js" data-passo="4"><code>// PASSO 4 — Função simples e síncrona: estaAtivo (caminhos: status 1 e status diferente de 1)
+describe(&#x27;estaAtivo&#x27;, () =&gt; {
+  it(&#x27;é verdadeiro quando o status é 1&#x27;, () =&gt; {
+    // Arrange (preparar): o usuário que vamos avaliar
+    const usuario = { login: &#x27;ana&#x27;, senha: &#x27;123&#x27;, status: 1 };
+
+    // Act (agir): chamamos a função exatamente uma vez
+    const resultado = estaAtivo(usuario);
+
+    // Assert (conferir): toBe é o matcher certo para um valor simples (true/false)
+    expect(resultado).toBe(true);
+  });
+
+  it(&#x27;é falso quando o status é 0 (inativo)&#x27;, () =&gt; {
+    expect(estaAtivo({ status: 0 })).toBe(false);
+  });
+
+  // Este teste &quot;mata&quot; o mutante `&gt;=` do passo 10: só o status 1 é ativo, 2 não é
+  it(&#x27;é falso para qualquer outro status, como 2&#x27;, () =&gt; {
+    expect(estaAtivo({ status: 2 })).toBe(false);
+  });
+});</code></pre><ul><li>Um <code>it</code> para <strong>cada caminho</strong> da função: aqui, status 1 e status 0.</li><li><code>toBe</code> serve para valores simples (<code>true</code>, números, textos).</li><li>Cada teste é <strong>independente</strong>: não depende da ordem nem do resultado de outro.</li></ul></section><section class="cartao passo" id="passo-5"><h2><span class="passo__n">5</span> Testar a validação: toEqual, toContain e it.each</h2>
+<p><code>validarUsuario</code> devolve uma lista de erros. Aqui entram os
+<strong>valores-limite</strong>: não basta testar o valor certo, teste também os vizinhos errados.</p><pre data-fonte="src/usuario.exemplo.test.js" data-passo="5"><code>// PASSO 5 — Validação: validarUsuario devolve uma LISTA de erros (lista vazia = tudo certo)
+describe(&#x27;validarUsuario&#x27;, () =&gt; {
+  it(&#x27;devolve lista vazia para um usuário válido&#x27;, () =&gt; {
+    // toEqual compara o CONTEÚDO de arrays e objetos (toBe compararia a referência)
+    expect(validarUsuario(USUARIO_OK)).toEqual([]);
+  });
+
+  it(&#x27;exige login e senha&#x27;, () =&gt; {
+    const erros = validarUsuario({ login: &#x27;&#x27;, senha: &#x27;&#x27;, status: 1 });
+
+    expect(erros).toEqual([&#x27;Login obrigatório&#x27;, &#x27;Senha obrigatória&#x27;]);
+  });
+
+  // Valores-limite: it.each repete o mesmo teste para vários valores (%s vira o valor)
+  it.each([2, -1, &#x27;1&#x27;, undefined])(&#x27;recusa o status %s (só 1 ou 0 valem)&#x27;, (status) =&gt; {
+    // toContain confere se UM item está dentro da lista, sem exigir a lista inteira
+    expect(validarUsuario({ ...USUARIO_OK, status })).toContain(&#x27;Status deve ser 1 ou 0&#x27;);
+  });
+
+  it.each([0, 1])(&#x27;aceita o status %s&#x27;, (status) =&gt; {
+    expect(validarUsuario({ ...USUARIO_OK, status })).toEqual([]);
+  });
+});</code></pre><ul><li><code>toEqual</code> compara o <em>conteúdo</em> de listas e objetos; <code>toBe</code> compararia a referência.</li><li><code>toContain</code> confere se <em>um</em> item está na lista, sem exigir a lista toda.</li><li><code>it.each([...])</code> repete o mesmo teste para vários valores e evita copiar e colar.</li><li>Use o matcher <strong>mais específico</strong>: <code>toEqual([])</code> diz mais que <code>toBeFalsy()</code>.</li></ul></section><section class="cartao passo" id="passo-6"><h2><span class="passo__n">6</span> Testar o repositório com promessas (sem await)</h2>
+<p>O banco responde de forma assíncrona (<code>fetch</code>). Como o projeto não usa
+<code>await</code>, cada teste <strong>devolve</strong> (<code>return</code>) a promessa encadeada
+com <code>.then</code>:</p><pre data-fonte="src/usuario.exemplo.test.js" data-passo="6"><code>// PASSO 6 — Repositório: o banco responde de forma assíncrona (fetch), então cada teste
+// DEVOLVE (return) a promessa encadeada com .then. Sem o return o teste termina antes
+// do resultado chegar e &quot;passa&quot; sem conferir nada.
+describe(&#x27;repositório de usuários&#x27;, () =&gt; {
+  let repositorio;
+  let api;
+
+  // beforeEach: um banco novo e vazio antes de CADA teste, para um não depender do outro
+  beforeEach(() =&gt; {
+    api = criarApiFalsa();
+    repositorio = criarRepositorioUsuarios(api);
+  });
+
+  it(&#x27;cadastra e depois encontra o usuário pelo login&#x27;, () =&gt; {
+    return repositorio
+      .cadastrar(USUARIO_OK) // Arrange + Act
+      .then(() =&gt; repositorio.buscarPorLogin(&#x27;ana&#x27;)) // Act
+      .then((usuario) =&gt; {
+        // Assert: o banco acrescentou o id sozinho
+        expect(usuario).toEqual({ ...USUARIO_OK, id: 1 });
+      });
+  });
+
+  it(&#x27;devolve null quando o login não existe&#x27;, () =&gt; {
+    return repositorio.buscarPorLogin(&#x27;ninguem&#x27;).then((usuario) =&gt; {
+      expect(usuario).toBeNull();
+    });
+  });
+
+  it(&#x27;recusa login repetido&#x27;, () =&gt; {
+    const repetido = repositorio
+      .cadastrar(USUARIO_OK)
+      .then(() =&gt; repositorio.cadastrar(USUARIO_OK));
+
+    // rejects + toThrow: a promessa deve ser RECUSADA com esta mensagem (sem await)
+    return expect(repetido).rejects.toThrow(&#x27;Login já cadastrado&#x27;);
+  });
+
+  it(&#x27;recusa dados inválidos e não grava nada&#x27;, () =&gt; {
+    const invalido = repositorio.cadastrar({ login: &#x27;&#x27;, senha: &#x27;&#x27;, status: 5 });
+
+    return expect(invalido)
+      .rejects.toThrow(&#x27;Login obrigatório&#x27;)
+      .then(() =&gt; repositorio.listar())
+      .then((lista) =&gt; expect(lista).toHaveLength(0));
+  });
+});</code></pre><ul><li><strong>Sem o <code>return</code> o teste termina antes do resultado chegar e passa sem conferir nada</strong> (o erro mais comum).</li><li><code>beforeEach</code> cria um banco novo antes de cada teste: nenhum teste enxerga os dados do anterior.</li><li><code>expect(promessa).rejects.toThrow('mensagem')</code> confere uma recusa (o <code>catch</code> do cadastro).</li><li>O teste de dados inválidos confere duas coisas: a recusa <em>e</em> que nada foi gravado.</li></ul></section><section class="cartao passo" id="passo-7"><h2><span class="passo__n">7</span> Isolar a dependência com mock (vi.fn)</h2>
+<p>Para <em>provar como</em> a API foi usada, trocamos a API por um <strong>mock</strong>: uma função
+falsa que devolve o que o teste manda e registra como foi chamada.</p><pre data-fonte="src/usuario.exemplo.test.js" data-passo="7"><code>// PASSO 7 — Mock: trocamos a API por um substituto para PROVAR como ela foi usada.
+describe(&#x27;repositório de usuários com mock da API&#x27;, () =&gt; {
+  it(&#x27;não chama api.criar quando o login já existe&#x27;, () =&gt; {
+    // vi.fn().mockResolvedValue(x): função falsa que devolve uma promessa já resolvida com x
+    const api = {
+      listar: vi.fn().mockResolvedValue([{ id: 1, ...USUARIO_OK }]),
+      criar: vi.fn(),
+    };
+
+    return criarRepositorioUsuarios(api)
+      .cadastrar(USUARIO_OK)
+      .catch(() =&gt; {})
+      .then(() =&gt; {
+        // not.toHaveBeenCalled: garante que NADA foi gravado
+        expect(api.criar).not.toHaveBeenCalled();
+      });
+  });
+
+  it(&#x27;chama api.criar na coleção &quot;usuarios&quot; com os dados informados&#x27;, () =&gt; {
+    const api = {
+      listar: vi.fn().mockResolvedValue([]),
+      criar: vi.fn().mockResolvedValue({ id: 1, ...USUARIO_OK }),
+    };
+
+    return criarRepositorioUsuarios(api)
+      .cadastrar(USUARIO_OK)
+      .then(() =&gt; {
+        // toHaveBeenCalledWith confere os argumentos da chamada
+        expect(api.criar).toHaveBeenCalledWith(&#x27;usuarios&#x27;, USUARIO_OK);
+      });
+  });
+});</code></pre><ul><li><code>vi.fn().mockResolvedValue(x)</code> devolve uma promessa já resolvida com <code>x</code>.</li><li><code>not.toHaveBeenCalled()</code> prova que <strong>nada</strong> foi gravado quando o login já existe.</li><li><code>toHaveBeenCalledWith('usuarios', dados)</code> prova que a gravação usou a coleção e os dados certos.</li><li>O repositório recebe a <code>api</code> por parâmetro (injeção de dependência): é isso que torna o mock possível.</li></ul></section><section class="cartao passo" id="passo-8"><h2><span class="passo__n">8</span> Testar a tela (DOM) com jsdom</h2>
+<p>O Vitest roda os testes com o <strong>jsdom</strong>, um navegador de mentira: dá para criar elementos,
+procurar com <code>querySelector</code> e disparar eventos sem abrir janela.</p><pre data-fonte="src/usuario.exemplo.test.js" data-passo="8"><code>// PASSO 8 — Tela (DOM): o Vitest usa o jsdom, um &quot;navegador de mentira&quot; sem abrir janela.
+describe(&#x27;criarTelaUsuario&#x27;, () =&gt; {
+  it(&#x27;lista o usuário cadastrado sem mostrar a senha&#x27;, () =&gt; {
+    const api = criarApiFalsa();
+
+    return criarRepositorioUsuarios(api)
+      .cadastrar(USUARIO_OK)
+      .then(() =&gt; {
+        const tela = criarTelaUsuario(api);
+
+        // A tabela é desenhada depois que a lista chega: vi.waitFor repete o expect até passar
+        return vi.waitFor(() =&gt; {
+          const linha = tela.querySelector(&#x27;tbody&#x27;).rows[0];
+          expect(linha.textContent).toContain(&#x27;ana&#x27;);
+          expect(linha.textContent).not.toContain(&#x27;123&#x27;);
+        });
+      });
+  });
+});</code></pre><ul><li>A tabela só é desenhada <em>depois</em> que a lista chega; <code>vi.waitFor</code> repete o <code>expect</code> até passar (ou estourar o tempo).</li><li><code>not.toContain('123')</code> garante uma regra de segurança: a senha nunca aparece na tela.</li></ul></section><section class="cartao passo" id="passo-9"><h2><span class="passo__n">9</span> Rodar e ler o resultado</h2>
+<pre><code>npx vitest run src/usuario.test.js</code></pre>
+<p>Resultado esperado: todos os testes com ✓ e uma linha parecida com
+<code>Tests  N passed (N)</code>. Se algum falhar, leia o bloco vermelho:</p><ul><li><strong>Expected / Received</strong>: o que você esperava e o que a função devolveu.</li><li>A linha com <code>❯ src/usuario.test.js:NN</code> aponta o teste que falhou.</li><li>Falhou por <em>timeout</em> ou passou rápido demais? Confira se esqueceu o <code>return</code> da promessa.</li></ul></section><section class="cartao passo" id="passo-10"><h2><span class="passo__n">10</span> Dinâmica: o mutante sobrevivente</h2>
+<p>Um teste só tem valor se <strong>falha quando o código está errado</strong>. Em dupla, altere o
+<code>usuario.js</code> e rode os testes:</p>
+<table class="tabela"><thead><tr><td>Mutante (alteração)</td><td>Quem deve falhar</td></tr></thead><tbody>
+<tr><td>Trocar <code>=== STATUS_ATIVO</code> por <code>&gt;= STATUS_ATIVO</code> em <code>estaAtivo</code></td><td>O teste "é falso para qualquer outro status, como 2" (sem ele, o mutante sobrevive)</td></tr>
+<tr><td>Apagar a linha da validação da senha</td><td>"exige login e senha"</td></tr>
+<tr><td>Remover a linha <code>if (existente) throw new Error('Login já cadastrado')</code> do <code>cadastrar</code></td><td>"recusa login repetido" e o mock de <code>criar</code> não chamado</td></tr>
+<tr><td>Exibir a coluna <code>senha</code> na tela</td><td>"sem mostrar a senha"</td></tr>
+</tbody></table>
+<p>Se <strong>nenhum teste falhar</strong>, o mutante sobreviveu: escreva o teste que faltava. Depois
+desfaça a alteração (<code>git checkout src/usuario.js</code>).</p></section><section class="cartao passo" id="passo-11"><h2><span class="passo__n">11</span> Checklist de entrega</h2>
+<ul class="checklist">
+<li>☐ Arquivo <code>src/usuario.test.js</code> criado, com os 5 grupos (<code>describe</code>) dos passos 4 a 8.</li>
+<li>☐ Cada teste segue Arrange, Act, Assert e tem um nome que descreve o comportamento.</li>
+<li>☐ Usei o matcher mais específico em cada conferência.</li>
+<li>☐ Cobri os valores-limite (status 0, 1, 2, -1, texto e <code>undefined</code>).</li>
+<li>☐ Toda promessa é devolvida com <code>return</code>; não há <code>async</code>/<code>await</code>.</li>
+<li>☐ Usei pelo menos um mock (<code>vi.fn</code>) e provei como a API foi chamada.</li>
+<li>☐ <code>npx vitest run src/usuario.test.js</code> passa com todos os testes.</li>
+<li>☐ Fiz a dinâmica do mutante e registrei qual sobreviveu.</li>
+<li>☐ Tirei o print do terminal com os testes passando.</li>
+</ul>
+<p class="dica">Depois faça o mesmo para <code>cliente.js</code>, <code>produto.js</code>, <code>login.js</code>,
+<code>pedido.js</code> e <code>menu.js</code>, um arquivo de teste para cada um.</p></section>
+      <section class="cartao">
+        <h2>Arquivo completo</h2>
+        <p>Depois de entender cada passo, compare com o arquivo inteiro:
+        <code>src/usuario.exemplo.test.js</code> (abra no editor).</p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -13,3 +13,5 @@
 | CRMAPI.1 | api.js (cliente do json-server) e telas usando fetch + .then | 🟡 Média | MEDIO · só Sonnet | Nenhuma | ✅ Concluído | — | [ETAPA-004](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
 | CRMAPI.2 | Menu Config com modal para o endereço do banco local | 🟡 Média | MEDIO · só Sonnet | CRMAPI.1 | ✅ Concluído | — | [ETAPA-004](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
 | **CRMAPI** | **json-server real e menu Config no CRM** | 🟡 Média | — | Nenhuma | ✅ Concluído | — (não reservável) | [ETAPA-004](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
+| CRMEX.1 | Teste de exemplo comentado, página exemplo-usuario.html e botão na atividade | 🟡 Média | MEDIO · só Sonnet | Nenhuma | ✅ Concluído | — | [ETAPA-005](etapas/ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md) |
+| **CRMEX** | **Teste de exemplo do usuario.js e página de passo a passo** | 🟡 Média | — | Nenhuma | ✅ Concluído | — (não reservável) | [ETAPA-005](etapas/ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md) |

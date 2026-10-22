@@ -21,6 +21,8 @@
       .documento code, .documento pre { font-family: var(--fonte-dados); color: var(--cor-ciano); }
       .documento pre { padding: 12px; overflow-x: auto; background: rgba(5, 3, 13, 0.8); border: 1px solid var(--cor-borda); border-radius: 6px; }
       .documento li { margin-bottom: 4px; }
+      .documento__acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+      .botao--link { display: inline-block; text-decoration: none; }
       .documento__topo { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
       .exercicio-box { margin: 12px 0; padding: 14px; border: 1px solid var(--cor-borda); border-radius: 8px; background: rgba(5, 3, 13, 0.6); }
       .exercicio-header { margin-bottom: 8px; font-family: var(--fonte-titulo); color: var(--cor-magenta); }
@@ -34,7 +36,11 @@
     <main class="documento">
       <div class="documento__topo">
         <h1>PLANO DE ENSINO — Situação de Aprendizagem</h1>
-        <button class="botao" id="botao-pdf" type="button">📥 Exportar PDF</button>
+        <div class="documento__acoes">
+          <button class="botao" id="botao-pdf" type="button">📥 Exportar PDF</button>
+          <a class="botao botao--secundario botao--link" href="exemplo-usuario.html"
+             target="_blank" rel="noopener">TESTE DE EXEMPLO USUARIO</a>
+        </div>
       </div>
 
       <section class="cartao">

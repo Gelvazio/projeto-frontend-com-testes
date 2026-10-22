@@ -34,6 +34,7 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 | 002-5d7a2c80 | MENU: botão COVERAGE com modal | [ETAPA-002-5d7a2c80-MENU-COVERAGE.md](etapas/ETAPA-002-5d7a2c80-MENU-COVERAGE.md) |
 | 003-8c4f17a9 | CRMPDF: botão Exportar PDF na atividade do CRM | [ETAPA-003-8c4f17a9-CRM-PDF.md](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
 | 004-6e2d9b35 | CRMAPI: json-server real e menu Config no CRM | [ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
+| 005-9a1c4e72 | CRMEX: teste de exemplo do usuario.js e página de passo a passo | [ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md](etapas/ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md) |
 
 ## Riscos
 
