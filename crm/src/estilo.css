@@ -234,3 +234,74 @@ select:focus-visible {
     animation: none;
   }
 }
+
+/* Tela de login: usuário, senha e botão empilhados e centralizados */
+.formulario--centralizado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco);
+}
+
+.formulario--centralizado .campo {
+  width: 100%;
+  max-width: 280px;
+  text-align: center;
+  color: var(--cor-ciano);
+}
+
+.formulario--centralizado .campo input {
+  width: 100%;
+  margin-top: 6px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.formulario--centralizado .botao {
+  align-self: center;
+}
+
+.cartao--login h2,
+.cartao--login .mensagem {
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .formulario--centralizado {
+    align-items: center;
+  }
+}
+
+/* Modal de configurações */
+.modal-config {
+  width: min(480px, 92vw);
+  padding: calc(var(--espaco) * 1.5);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-ciano);
+  border-radius: var(--raio);
+  box-shadow: var(--brilho-ciano);
+}
+
+.modal-config::backdrop {
+  background: rgba(5, 3, 13, 0.8);
+  backdrop-filter: blur(3px);
+}
+
+.modal-config h2 {
+  margin-top: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 1.1rem;
+  color: var(--cor-ciano);
+}
+
+.modal-config .campo input {
+  width: 100%;
+}
+
+.modal-config__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: var(--espaco);
+}

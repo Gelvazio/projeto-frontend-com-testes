@@ -7,7 +7,7 @@ describe('menu', () => {
 
     const rotulos = [...menu.querySelectorAll('button')].map((botao) => botao.textContent);
 
-    expect(rotulos).toEqual(['Clientes', 'Produtos', 'Pedidos', 'Usuários', 'Sair']);
+    expect(rotulos).toEqual(['Clientes', 'Produtos', 'Pedidos', 'Usuários', 'Config', 'Sair']);
   });
 
   it('avisa o id do item clicado (mock)', () => {

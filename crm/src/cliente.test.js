@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { criarBanco } from './banco.js';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { criarApiFalsa } from './api-falsa.js';
 import {
   cadastrarCliente, criarTelaCliente, listarClientes, removerCliente, validarCliente,
 } from './cliente.js';
@@ -32,37 +32,51 @@ describe('validarCliente', () => {
   });
 });
 
-describe('repositório de clientes', () => {
-  let banco;
+describe('acesso à API de clientes', () => {
+  let api;
 
   beforeEach(() => {
-    banco = criarBanco();
+    api = criarApiFalsa();
   });
 
   it('cadastra e lista o cliente com id', () => {
-    const salvo = cadastrarCliente(banco, CLIENTE_OK);
-
-    expect(salvo.id).toBe(1);
-    expect(listarClientes(banco)).toEqual([{ ...CLIENTE_OK, id: 1 }]);
+    return cadastrarCliente(api, CLIENTE_OK)
+      .then((salvo) => {
+        expect(salvo.id).toBe(1);
+        return listarClientes(api);
+      })
+      .then((lista) => expect(lista).toEqual([{ ...CLIENTE_OK, id: 1 }]));
   });
 
-  it('lança erro e não grava quando os dados são inválidos', () => {
-    expect(() => cadastrarCliente(banco, { ...CLIENTE_OK, nome: '' })).toThrow('Nome obrigatório');
-    expect(listarClientes(banco)).toHaveLength(0);
+  it('recusa e não grava quando os dados são inválidos', () => {
+    return cadastrarCliente(api, { ...CLIENTE_OK, nome: '' })
+      .then(
+        () => {
+          throw new Error('deveria ter recusado');
+        },
+        (erro) => expect(erro.message).toContain('Nome obrigatório')
+      )
+      .then(() => listarClientes(api))
+      .then((lista) => expect(lista).toHaveLength(0));
   });
 
   it('remove um cliente', () => {
-    cadastrarCliente(banco, CLIENTE_OK);
-
-    expect(removerCliente(banco, 1)).toBe(true);
-    expect(listarClientes(banco)).toHaveLength(0);
+    return cadastrarCliente(api, CLIENTE_OK)
+      .then(() => removerCliente(api, 1))
+      .then((removido) => {
+        expect(removido).toBe(true);
+        return listarClientes(api);
+      })
+      .then((lista) => expect(lista).toHaveLength(0));
   });
 
   it('a tela lista os clientes já cadastrados', () => {
-    cadastrarCliente(banco, CLIENTE_OK);
+    return cadastrarCliente(api, CLIENTE_OK).then(() => {
+      const tela = criarTelaCliente(api);
 
-    const tela = criarTelaCliente(banco);
-
-    expect(tela.querySelector('tbody').rows[0].cells[1].textContent).toBe('Ana');
+      return vi.waitFor(() => {
+        expect(tela.querySelector('tbody').rows[0].cells[1].textContent).toBe('Ana');
+      });
+    });
   });
 });

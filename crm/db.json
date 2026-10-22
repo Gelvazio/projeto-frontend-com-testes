@@ -1,0 +1,9 @@
+{
+  "usuarios": [
+    { "id": 1, "login": "aluno", "senha": "aluno", "status": 1 },
+    { "id": 2, "login": "inativo", "senha": "123", "status": 0 }
+  ],
+  "clientes": [],
+  "produtos": [],
+  "pedidos": []
+}

@@ -1,4 +1,4 @@
-/** Cadastro de cliente: regras de validação, repositório sobre o banco e tela. */
+/** Cadastro de cliente: regras de validação, acesso à API e tela. */
 
 import { criarTelaCadastro } from './tela.js';
 
@@ -37,45 +37,45 @@ export function validarCliente(cliente) {
 
 /**
  * Valida e grava um cliente.
- * @param {object} banco - Banco injetado.
+ * @param {object} api - API injetada (json-server).
  * @param {object} dados - Dados do cliente.
- * @returns {object} Cliente salvo, com id.
- * @throws {Error} Com os erros de validação separados por "; ".
+ * @returns {Promise<object>} Cliente salvo, com id.
+ * (Recusa com os erros separados por "; " se os dados forem inválidos.)
  */
-export function cadastrarCliente(banco, dados) {
+export function cadastrarCliente(api, dados) {
   const erros = validarCliente(dados);
-  if (erros.length > 0) throw new Error(erros.join('; '));
-  return banco.criar(COLECAO_CLIENTES, dados);
+  if (erros.length > 0) return Promise.reject(new Error(erros.join('; ')));
+  return api.criar(COLECAO_CLIENTES, dados);
 }
 
 /**
- * @param {object} banco - Banco injetado.
- * @returns {object[]} Todos os clientes.
+ * @param {object} api - API injetada (json-server).
+ * @returns {Promise<object[]>} Todos os clientes.
  */
-export function listarClientes(banco) {
-  return banco.listar(COLECAO_CLIENTES);
+export function listarClientes(api) {
+  return api.listar(COLECAO_CLIENTES);
 }
 
 /**
- * @param {object} banco - Banco injetado.
+ * @param {object} api - API injetada (json-server).
  * @param {number} id - Id do cliente.
- * @returns {boolean} true se removeu.
+ * @returns {Promise<boolean>} true se removeu.
  */
-export function removerCliente(banco, id) {
-  return banco.remover(COLECAO_CLIENTES, id);
+export function removerCliente(api, id) {
+  return api.remover(COLECAO_CLIENTES, id);
 }
 
 /**
  * Monta a tela de clientes.
- * @param {object} banco - Banco injetado.
+ * @param {object} api - API injetada (json-server).
  * @returns {HTMLElement} Seção da tela.
  */
-export function criarTelaCliente(banco) {
+export function criarTelaCliente(api) {
   return criarTelaCadastro({
     titulo: 'Clientes',
     campos: CAMPOS_CLIENTE,
     colunas: COLUNAS_CLIENTE,
-    aoSalvar: (dados) => cadastrarCliente(banco, dados),
-    aoListar: () => listarClientes(banco),
+    aoSalvar: (dados) => cadastrarCliente(api, dados),
+    aoListar: () => listarClientes(api),
   });
 }

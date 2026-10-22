@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { criarBanco } from './banco.js';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { criarApiFalsa } from './api-falsa.js';
 import {
   criarRepositorioUsuarios, criarTelaUsuario, estaAtivo, validarUsuario,
 } from './usuario.js';
@@ -32,34 +32,45 @@ describe('validarUsuario', () => {
 
 describe('repositório de usuários', () => {
   let repositorio;
-  let banco;
+  let api;
 
   beforeEach(() => {
-    banco = criarBanco();
-    repositorio = criarRepositorioUsuarios(banco);
+    api = criarApiFalsa();
+    repositorio = criarRepositorioUsuarios(api);
   });
 
   it('cadastra e busca por login', () => {
-    repositorio.cadastrar(USUARIO_OK);
-
-    expect(repositorio.buscarPorLogin('ana')).toEqual({ ...USUARIO_OK, id: 1 });
+    return repositorio
+      .cadastrar(USUARIO_OK)
+      .then(() => repositorio.buscarPorLogin('ana'))
+      .then((usuario) => expect(usuario).toEqual({ ...USUARIO_OK, id: 1 }));
   });
 
   it('devolve null quando o login não existe', () => {
-    expect(repositorio.buscarPorLogin('ninguem')).toBeNull();
+    return repositorio.buscarPorLogin('ninguem').then((usuario) => expect(usuario).toBeNull());
   });
 
   it('recusa login repetido', () => {
-    repositorio.cadastrar(USUARIO_OK);
-
-    expect(() => repositorio.cadastrar(USUARIO_OK)).toThrow('Login já cadastrado');
+    return repositorio
+      .cadastrar(USUARIO_OK)
+      .then(() => repositorio.cadastrar(USUARIO_OK))
+      .then(
+        () => {
+          throw new Error('deveria ter recusado');
+        },
+        (erro) => expect(erro.message).toBe('Login já cadastrado')
+      );
   });
 
   it('a tela mostra os usuários sem exibir a senha', () => {
-    repositorio.cadastrar(USUARIO_OK);
+    return repositorio.cadastrar(USUARIO_OK).then(() => {
+      const tela = criarTelaUsuario(api);
 
-    const tela = criarTelaUsuario(banco);
-
-    expect(tela.querySelector('tbody').rows[0].textContent).not.toContain('123');
+      return vi.waitFor(() => {
+        const linha = tela.querySelector('tbody').rows[0];
+        expect(linha.textContent).toContain('ana');
+        expect(linha.textContent).not.toContain('123');
+      });
+    });
   });
 });

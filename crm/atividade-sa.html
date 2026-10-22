@@ -83,9 +83,10 @@
         </p>
         <p>
           O CRM é um projeto <strong>Vite</strong> com uma página principal (<code>index.html</code>)
-          e um arquivo JavaScript por assunto. Não há banco de dados: o arquivo <code>banco.js</code>
-          imita um <em>json-server</em> (listar, buscar, criar, atualizar, remover) guardando tudo em
-          memória.
+          e um arquivo JavaScript por assunto. O banco é um <strong>json-server</strong> local (arquivo
+          <code>db.json</code>, iniciado com <code>npm run api</code>) acessado pela Fetch API em
+          <code>api.js</code> (listar, buscar, criar, atualizar, remover). O menu <strong>Config</strong>
+          guarda o endereço desse banco. Login de entrada: usuário <code>aluno</code>, senha <code>aluno</code>.
         </p>
       </section>
 
@@ -98,14 +99,14 @@
           matcher mais específico em cada verificação e cobrindo os valores-limite. Nos testes de
           <code>login.js</code> e <code>pedido.js</code>, substitua dependências por <em>mocks</em>.
         </p>
-        <p>Regra do projeto: <strong>não use <code>async</code>/<code>await</code></strong> — as funções são síncronas e recebem suas dependências por parâmetro.</p>
+        <p>Regra do projeto: <strong>não use <code>async</code>/<code>await</code></strong> — encadeie o <code>fetch</code> com <code>.then()</code> e receba as dependências (a API, o <code>fetch</code>, o relógio) por parâmetro.</p>
       </section>
 
       <section class="cartao">
         <h2>Resultados esperados</h2>
         <ul>
           <li>Projeto Vite do CRM rodando (<code>npm run dev</code>) com login, menu, clientes, produtos, pedidos e usuários.</li>
-          <li>Um <code>.test.js</code> para cada arquivo: <code>banco</code>, <code>tela</code>, <code>cliente</code>, <code>produto</code>, <code>pedido</code>, <code>usuario</code>, <code>login</code> e <code>menu</code>.</li>
+          <li>Um <code>.test.js</code> para cada arquivo: <code>api</code>, <code>api-falsa</code>, <code>config</code>, <code>pdf-atividade</code>, <code>tela</code>, <code>cliente</code>, <code>produto</code>, <code>pedido</code>, <code>usuario</code>, <code>login</code> e <code>menu</code>.</li>
           <li>No mínimo 3 testes por arquivo, incluindo bordas (idade 0 e 120, estoque 0, status 0 e 1).</li>
           <li>Print do terminal com <code>npm run test:run</code> e todos os testes passando.</li>
         </ul>
@@ -115,11 +116,13 @@
         <h2>Mapa do projeto</h2>
         <table>
           <tr><th>Arquivo</th><td>Responsabilidade → o que o teste deve provar</td></tr>
-          <tr><th><code>banco.js</code></th><td>"json-server" em memória → ids autoincrementais, buscar inexistente (<code>null</code>), cópias isoladas, <code>aoMudar</code> chamado (mock).</td></tr>
+          <tr><th><code>api.js</code></th><td>Cliente do json-server (Fetch API) → URL certa, verbo certo (GET/POST/PATCH/DELETE), 404 vira <code>null</code>, erro de rede vira mensagem clara; <code>fetch</code> falso com <code>vi.fn().mockResolvedValue</code>.</td></tr>
+          <tr><th><code>api-falsa.js</code></th><td>API em memória usada só nos testes → ids autoincrementais, cópias isoladas.</td></tr>
+          <tr><th><code>config.js</code></th><td>Menu Config (modal) → validar e normalizar o endereço do banco local, salvar/ler no <code>localStorage</code> falso, testar conexão com <code>fetch</code> falso.</td></tr>
           <tr><th><code>cliente.js</code></th><td>{id, nome, idade, cidade, salario} → validação, limites de idade, <code>toThrow</code>, <code>toContain</code>.</td></tr>
           <tr><th><code>produto.js</code></th><td>{id, nome, preco, estoque} → preço &gt; 0, estoque inteiro ≥ 0, <code>temEstoque</code>.</td></tr>
           <tr><th><code>usuario.js</code></th><td>{id, login, senha, status 1=ativo / 0=inativo} → status válido, login único.</td></tr>
-          <tr><th><code>login.js</code></th><td>Autenticação → 4 motivos de recusa + sucesso; repositório falso com <code>vi.fn().mockReturnValue</code>.</td></tr>
+          <tr><th><code>login.js</code></th><td>Autenticação → 4 motivos de recusa + sucesso; usuário padrão <code>aluno</code>/<code>aluno</code> entra direto (sem consultar o banco); repositório falso com <code>vi.fn().mockResolvedValue</code>.</td></tr>
           <tr><th><code>pedido.js</code></th><td>Venda → <code>toBeCloseTo</code> no total, baixa de estoque, relógio mockado, erros.</td></tr>
           <tr><th><code>menu.js</code></th><td>Navegação → um botão por item, clique chama <code>aoSelecionar</code>, só um item ativo.</td></tr>
           <tr><th><code>tela.js</code></th><td>Molde de cadastro → leitura de campos, tabela, mensagem de erro no envio.</td></tr>
@@ -135,7 +138,7 @@ cd crm
 npm install -D vitest jsdom
 npm pkg set scripts.test="vitest" scripts.test:run="vitest run"</pre>
             No <code>vite.config.js</code> use <code>test: { environment: 'jsdom' }</code>.</li>
-          <li>Escreva <code>banco.js</code> e <code>banco.test.js</code>. Rode <code>npm test</code> (modo observação).</li>
+          <li>Suba o banco com <code>npm i -D json-server@0.17.4</code> e <code>npm run api</code>; escreva <code>api.js</code> e <code>api.test.js</code> (com <code>fetch</code> falso). Rode <code>npm test</code> (modo observação).</li>
           <li>Repita a dupla <em>arquivo + teste</em> para <code>cliente</code>, <code>produto</code>, <code>usuario</code>, <code>login</code>, <code>pedido</code>, <code>menu</code> e <code>tela</code>, nessa ordem.</li>
           <li>Monte o <code>index.html</code> e o <code>main.js</code> ligando login → menu → telas.</li>
           <li><strong>Dinâmica "Mutante sobrevivente" (25 min):</strong> a dupla A troca <code>&gt;=</code> por <code>&gt;</code> (ou um valor fixo) no código da dupla B; se nenhum teste falhar, a dupla B escreve o teste que faltava.</li>
@@ -149,7 +152,7 @@ npm pkg set scripts.test="vitest" scripts.test:run="vitest run"</pre>
           <tr><th>Momento</th><td>Tempo — o que acontece</td></tr>
           <tr><th>Retomada</th><td>15 min — quiz sobre plano e casos de teste.</td></tr>
           <tr><th>Exposição</th><td>40 min — automação, Vitest, AAA e matchers.</td></tr>
-          <tr><th>Prática guiada</th><td>35 min — Passo 0 e primeiro teste (<code>banco</code>).</td></tr>
+          <tr><th>Prática guiada</th><td>35 min — Passo 0 e primeiro teste (<code>api</code>).</td></tr>
           <tr><th>Intervalo</th><td>15 min.</td></tr>
           <tr><th>Prática autônoma</th><td>70 min — <code>cliente</code>, <code>produto</code>, <code>usuario</code>, <code>login</code>.</td></tr>
           <tr><th>Dinâmica</th><td>25 min — mutante sobrevivente.</td></tr>
@@ -203,7 +206,7 @@ npm pkg set scripts.test="vitest" scripts.test:run="vitest run"</pre>
           <div class="exercicio-header">ITEM 4 - Mock e isolamento</div>
           <p><span class="exercicio-label">CAPACIDADE:</span> Isolar dependências com mock (<code>vi.fn</code>).</p>
           <p><span class="exercicio-label">Contexto:</span> A função <code>autenticar</code> recebe o repositório de usuários por parâmetro, em vez de acessar o banco.</p>
-          <p><span class="exercicio-label">Comando:</span> Crie um repositório falso com <code>vi.fn().mockReturnValue</code> e prove que um usuário inativo é recusado e que <code>buscarPorLogin</code> foi chamado com o login digitado. Explique por que não se usa o banco real.</p>
+          <p><span class="exercicio-label">Comando:</span> Crie um usuário padrão <code>aluno</code>/<code>aluno</code> entra direto (sem consultar o banco); repositório falso com <code>vi.fn().mockResolvedValue</code> e prove que um usuário inativo é recusado e que <code>buscarPorLogin</code> foi chamado com o login digitado. Explique por que não se usa o banco real.</p>
           <p><span class="exercicio-label">Resposta:</span></p>
         </div>
       </section>
@@ -214,7 +217,7 @@ npm pkg set scripts.test="vitest" scripts.test:run="vitest run"</pre>
           <li>Aponte Arrange, Act e Assert em um teste do seu projeto.</li>
           <li>Qual matcher compara <code>{ id: 1 }</code>? E <code>0.1 + 0.2</code>? E um erro esperado?</li>
           <li>Quantos testes, no mínimo, tem <code>autenticar</code> e por quê?</li>
-          <li>Por que o teste de <code>login.js</code> não deve usar o banco real?</li>
+          <li>Por que o teste de <code>login.js</code> não deve usar o json-server real?</li>
         </ul>
       </section>
     </main>

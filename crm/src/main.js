@@ -1,68 +1,55 @@
-/** Ponto de entrada: liga banco, login, menu e telas. Só aqui se toca a página inteira. */
+/** Ponto de entrada: liga a API, o login, o menu, o modal Config e as telas. */
 
 import './estilo.css';
-import { criarBanco } from './banco.js';
+import { criarApi } from './api.js';
 import { criarTelaCliente } from './cliente.js';
+import { abrirModalConfig, criarModalConfig, lerUrlBanco } from './config.js';
 import { criarTelaLogin } from './login.js';
-import { ITENS_MENU, montarMenu } from './menu.js';
+import { ITENS_MENU, marcarAtivo, montarMenu } from './menu.js';
 import { criarTelaPedido } from './pedido.js';
 import { criarTelaProduto } from './produto.js';
 import { criarRepositorioUsuarios, criarTelaUsuario } from './usuario.js';
 
-const CHAVE_BANCO = 'crm:banco';
-const DADOS_INICIAIS = {
-  usuarios: [
-    { id: 1, login: 'admin', senha: 'admin123', status: 1 },
-    { id: 2, login: 'inativo', senha: '123', status: 0 },
-  ],
-};
+const ID_SAIR = 'sair';
+const ID_CONFIG = 'config';
+const ID_TELA_INICIAL = ITENS_MENU[0].id;
 
-/** @returns {object} Dados salvos no navegador (ou os iniciais). */
-function lerDadosSalvos() {
-  try {
-    return JSON.parse(localStorage.getItem(CHAVE_BANCO)) ?? DADOS_INICIAIS;
-  } catch (erro) {
-    return DADOS_INICIAIS;
-  }
-}
-
-/** @param {object} dados - Dados a guardar no navegador (nosso "db.json"). */
-function salvarDados(dados) {
-  try {
-    localStorage.setItem(CHAVE_BANCO, JSON.stringify(dados));
-  } catch (erro) {
-    // sem armazenamento: os dados valem só nesta visita
-  }
-}
-
-const banco = criarBanco({ dadosIniciais: lerDadosSalvos(), aoMudar: salvarDados });
+const api = criarApi({ obterUrlBase: () => lerUrlBanco() });
+const modalConfig = criarModalConfig();
 const raiz = document.querySelector('#app');
 const menuArea = document.querySelector('#menu');
 const tela = document.querySelector('#tela');
 
 const TELAS = {
-  clientes: () => criarTelaCliente(banco),
-  produtos: () => criarTelaProduto(banco),
-  pedidos: () => criarTelaPedido(banco),
-  usuarios: () => criarTelaUsuario(banco),
+  clientes: () => criarTelaCliente(api),
+  produtos: () => criarTelaProduto(api),
+  pedidos: () => criarTelaPedido(api),
+  usuarios: () => criarTelaUsuario(api),
 };
 
-/** Volta para a tela de login. */
+/** Volta para a tela de login (o usuário aluno / aluno entra direto). */
 function mostrarLogin() {
   menuArea.replaceChildren();
-  tela.replaceChildren(criarTelaLogin(mostrarSistema, criarRepositorioUsuarios(banco)));
+  tela.replaceChildren(criarTelaLogin(mostrarSistema, criarRepositorioUsuarios(api)));
 }
 
 /** Mostra o menu e a primeira tela depois do login. */
 function mostrarSistema() {
-  const abrir = (id) => {
-    if (id === 'sair') return mostrarLogin();
+  let telaAtual = ID_TELA_INICIAL;
+  const menu = montarMenu(ITENS_MENU, (id) => {
+    if (id === ID_SAIR) return mostrarLogin();
+    if (id === ID_CONFIG) {
+      marcarAtivo(menu, telaAtual);
+      return abrirModalConfig(modalConfig);
+    }
+    telaAtual = id;
     tela.replaceChildren(TELAS[id]());
-  };
-  menuArea.replaceChildren(montarMenu(ITENS_MENU, abrir));
-  abrir(ITENS_MENU[0].id);
-  menuArea.querySelector('button').setAttribute('aria-current', 'page');
+  });
+  menuArea.replaceChildren(menu);
+  tela.replaceChildren(TELAS[ID_TELA_INICIAL]());
+  marcarAtivo(menu, ID_TELA_INICIAL);
 }
 
+document.body.append(modalConfig);
 raiz.hidden = false;
 mostrarLogin();

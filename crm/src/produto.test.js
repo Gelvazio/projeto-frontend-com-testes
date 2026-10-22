@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { criarBanco } from './banco.js';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { criarApiFalsa } from './api-falsa.js';
 import {
   cadastrarProduto, criarTelaProduto, listarProdutos, temEstoque, validarProduto,
 } from './produto.js';
@@ -37,29 +37,38 @@ describe('temEstoque', () => {
   });
 });
 
-describe('repositório de produtos', () => {
-  let banco;
+describe('acesso à API de produtos', () => {
+  let api;
 
   beforeEach(() => {
-    banco = criarBanco();
+    api = criarApiFalsa();
   });
 
   it('cadastra e lista o produto', () => {
-    cadastrarProduto(banco, PRODUTO_OK);
-
-    expect(listarProdutos(banco)).toEqual([{ ...PRODUTO_OK, id: 1 }]);
+    return cadastrarProduto(api, PRODUTO_OK)
+      .then(() => listarProdutos(api))
+      .then((lista) => expect(lista).toEqual([{ ...PRODUTO_OK, id: 1 }]));
   });
 
-  it('lança erro e não grava quando inválido', () => {
-    expect(() => cadastrarProduto(banco, { ...PRODUTO_OK, preco: 0 })).toThrow();
-    expect(listarProdutos(banco)).toHaveLength(0);
+  it('recusa e não grava quando inválido', () => {
+    return cadastrarProduto(api, { ...PRODUTO_OK, preco: 0 })
+      .then(
+        () => {
+          throw new Error('deveria ter recusado');
+        },
+        (erro) => expect(erro.message).toContain('Preço')
+      )
+      .then(() => listarProdutos(api))
+      .then((lista) => expect(lista).toHaveLength(0));
   });
 
   it('a tela lista os produtos cadastrados', () => {
-    cadastrarProduto(banco, PRODUTO_OK);
+    return cadastrarProduto(api, PRODUTO_OK).then(() => {
+      const tela = criarTelaProduto(api);
 
-    const tela = criarTelaProduto(banco);
-
-    expect(tela.querySelector('tbody').rows[0].cells[1].textContent).toBe('Teclado');
+      return vi.waitFor(() => {
+        expect(tela.querySelector('tbody').rows[0].cells[1].textContent).toBe('Teclado');
+      });
+    });
   });
 });

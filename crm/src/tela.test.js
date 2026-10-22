@@ -7,6 +7,11 @@ const CAMPOS = [
 ];
 const COLUNAS = [{ chave: 'nome', rotulo: 'Nome' }];
 
+/** Dispara o envio do formulário da tela. */
+function enviar(secao) {
+  secao.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true }));
+}
+
 describe('tela', () => {
   it('lerCampos converte números e remove espaços do texto', () => {
     const formulario = document.createElement('form');
@@ -23,8 +28,8 @@ describe('tela', () => {
   });
 
   it('chama aoSalvar com os dados e redesenha a lista ao enviar', () => {
-    const aoSalvar = vi.fn();
-    const aoListar = vi.fn().mockReturnValue([]);
+    const aoSalvar = vi.fn().mockResolvedValue({});
+    const aoListar = vi.fn().mockResolvedValue([]);
     const secao = criarTelaCadastro(
       { titulo: 'T', campos: CAMPOS, colunas: COLUNAS, aoSalvar, aoListar },
       document
@@ -32,23 +37,36 @@ describe('tela', () => {
     secao.querySelector('[name=nome]').value = 'Ana';
     secao.querySelector('[name=idade]').value = '20';
 
-    secao.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true }));
+    enviar(secao);
 
     expect(aoSalvar).toHaveBeenCalledWith({ nome: 'Ana', idade: 20 });
-    expect(aoListar).toHaveBeenCalledTimes(2);
+    return vi.waitFor(() => expect(aoListar).toHaveBeenCalledTimes(2));
   });
 
-  it('mostra a mensagem de erro quando aoSalvar lança erro', () => {
-    const aoSalvar = vi.fn(() => {
-      throw new Error('Nome obrigatório');
-    });
+  it('mostra a mensagem de erro quando aoSalvar recusa', () => {
+    const aoSalvar = vi.fn().mockRejectedValue(new Error('Nome obrigatório'));
+    const aoListar = vi.fn().mockResolvedValue([]);
     const secao = criarTelaCadastro(
-      { titulo: 'T', campos: CAMPOS, colunas: COLUNAS, aoSalvar, aoListar: () => [] },
+      { titulo: 'T', campos: CAMPOS, colunas: COLUNAS, aoSalvar, aoListar },
       document
     );
 
-    secao.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true }));
+    enviar(secao);
 
-    expect(secao.querySelector('.mensagem').textContent).toBe('Nome obrigatório');
+    return vi.waitFor(() =>
+      expect(secao.querySelector('.mensagem').textContent).toBe('Nome obrigatório')
+    );
+  });
+
+  it('mostra o erro quando a lista não carrega (banco fora do ar)', () => {
+    const aoListar = vi.fn().mockRejectedValue(new Error('Sem banco'));
+    const secao = criarTelaCadastro(
+      { titulo: 'T', campos: CAMPOS, colunas: COLUNAS, aoSalvar: vi.fn(), aoListar },
+      document
+    );
+
+    return vi.waitFor(() =>
+      expect(secao.querySelector('.mensagem').textContent).toBe('Sem banco')
+    );
   });
 });

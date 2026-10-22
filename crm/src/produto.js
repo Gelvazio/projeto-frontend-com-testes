@@ -1,4 +1,4 @@
-/** Cadastro de produto: regras de validação, repositório sobre o banco e tela. */
+/** Cadastro de produto: regras de validação, acesso à API e tela. */
 
 import { criarTelaCadastro } from './tela.js';
 
@@ -31,23 +31,23 @@ export function validarProduto(produto) {
 
 /**
  * Valida e grava um produto.
- * @param {object} banco - Banco injetado.
+ * @param {object} api - API injetada (json-server).
  * @param {object} dados - Dados do produto.
- * @returns {object} Produto salvo, com id.
- * @throws {Error} Com os erros de validação separados por "; ".
+ * @returns {Promise<object>} Produto salvo, com id.
+ * (Recusa com os erros separados por "; " se os dados forem inválidos.)
  */
-export function cadastrarProduto(banco, dados) {
+export function cadastrarProduto(api, dados) {
   const erros = validarProduto(dados);
-  if (erros.length > 0) throw new Error(erros.join('; '));
-  return banco.criar(COLECAO_PRODUTOS, dados);
+  if (erros.length > 0) return Promise.reject(new Error(erros.join('; ')));
+  return api.criar(COLECAO_PRODUTOS, dados);
 }
 
 /**
- * @param {object} banco - Banco injetado.
- * @returns {object[]} Todos os produtos.
+ * @param {object} api - API injetada (json-server).
+ * @returns {Promise<object[]>} Todos os produtos.
  */
-export function listarProdutos(banco) {
-  return banco.listar(COLECAO_PRODUTOS);
+export function listarProdutos(api) {
+  return api.listar(COLECAO_PRODUTOS);
 }
 
 /**
@@ -62,15 +62,15 @@ export function temEstoque(produto, quantidade) {
 
 /**
  * Monta a tela de produtos.
- * @param {object} banco - Banco injetado.
+ * @param {object} api - API injetada (json-server).
  * @returns {HTMLElement} Seção da tela.
  */
-export function criarTelaProduto(banco) {
+export function criarTelaProduto(api) {
   return criarTelaCadastro({
     titulo: 'Produtos',
     campos: CAMPOS_PRODUTO,
     colunas: COLUNAS_PRODUTO,
-    aoSalvar: (dados) => cadastrarProduto(banco, dados),
-    aoListar: () => listarProdutos(banco),
+    aoSalvar: (dados) => cadastrarProduto(api, dados),
+    aoListar: () => listarProdutos(api),
   });
 }

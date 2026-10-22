@@ -1,6 +1,7 @@
 /**
  * Monta uma tela de cadastro genérica (formulário + tabela) a partir de uma descrição.
  * Cliente, produto e usuário reaproveitam este mesmo molde (Open/Closed).
+ * aoSalvar e aoListar devolvem o resultado do fetch (encadeado com .then).
  */
 
 const CLASSE_MENSAGEM = 'mensagem';
@@ -64,8 +65,9 @@ export function criarTabela(colunas, registros, documento) {
 
 /**
  * Monta a tela de cadastro.
- * @param {{titulo: string, campos: object[], colunas: object[], aoSalvar: Function,
- *   aoListar: Function}} descricao - O que a tela mostra e como salva/lista.
+ * @param {{titulo: string, campos: object[], colunas: object[],
+ *   aoSalvar: (dados: object) => Promise, aoListar: () => Promise<object[]>}} descricao
+ *   - O que a tela mostra e como salva/lista.
  * @param {Document} [documento] - Documento (injetável nos testes).
  * @returns {HTMLElement} Seção da tela.
  */
@@ -86,24 +88,31 @@ export function criarTelaCadastro(descricao, documento = document) {
   mensagem.className = CLASSE_MENSAGEM;
   const area = documento.createElement('div');
 
-  /** Redesenha a tabela com os dados atuais. */
+  /** @returns {Promise} Redesenha a tabela com os dados atuais do banco. */
   function desenhar() {
-    area.replaceChildren(criarTabela(descricao.colunas, descricao.aoListar(), documento));
+    return descricao.aoListar().then((registros) => {
+      area.replaceChildren(criarTabela(descricao.colunas, registros, documento));
+    });
+  }
+
+  /** @param {Error} erro - Erro a mostrar abaixo do formulário. */
+  function mostrarErro(erro) {
+    mensagem.textContent = erro.message;
   }
 
   formulario.addEventListener('submit', (evento) => {
     evento.preventDefault();
-    try {
-      descricao.aoSalvar(lerCampos(formulario, descricao.campos));
-      mensagem.textContent = '';
-      formulario.reset();
-      desenhar();
-    } catch (erro) {
-      mensagem.textContent = erro.message;
-    }
+    descricao
+      .aoSalvar(lerCampos(formulario, descricao.campos))
+      .then(() => {
+        mensagem.textContent = '';
+        formulario.reset();
+        return desenhar();
+      })
+      .catch(mostrarErro);
   });
 
   secao.append(titulo, formulario, mensagem, area);
-  desenhar();
+  desenhar().catch(mostrarErro);
   return secao;
 }
