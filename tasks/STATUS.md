@@ -20,6 +20,8 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 
 | Tarefa | Título | Prioridade | Modelo | Depende de | Status | Em uso por | Etapa |
 |---|---|---|---|---|---|---|---|
+| **CRMPDF** | **Botão Exportar PDF na atividade do CRM** | 🟡 Média | — | Nenhuma | 🔄 Em progresso | — (não reservável) | [ETAPA-003](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
+| CRMPDF.1 | Botão Exportar PDF (jsPDF + autotable), padrão SENAI e visual futurista · `MEDIO · effort medium` | 🟡 Média | MEDIO · só Sonnet | Nenhuma | 🔄 Em execução | Claude Code (Sonnet 5.5) (local · main) (desde 2026-10-22) | [ETAPA-003](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
 
 ## Escopo do projeto
 
@@ -32,6 +34,7 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 |---|---|---|
 | 001-3b9e61d4 | CRM: atividade SA com projeto Vite de CRM | [ETAPA-001-3b9e61d4-CRM-ATIVIDADE.md](etapas/ETAPA-001-3b9e61d4-CRM-ATIVIDADE.md) |
 | 002-5d7a2c80 | MENU: botão COVERAGE com modal | [ETAPA-002-5d7a2c80-MENU-COVERAGE.md](etapas/ETAPA-002-5d7a2c80-MENU-COVERAGE.md) |
+| 003-8c4f17a9 | CRMPDF: botão Exportar PDF na atividade do CRM | [ETAPA-003-8c4f17a9-CRM-PDF.md](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
 
 ## Riscos
 
