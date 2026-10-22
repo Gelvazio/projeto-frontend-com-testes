@@ -126,6 +126,11 @@ body {
   background: transparent;
 }
 
+.botao--link {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .botao:hover,
 .botao:focus-visible {
   filter: brightness(1.1);
