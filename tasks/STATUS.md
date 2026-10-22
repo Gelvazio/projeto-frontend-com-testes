@@ -20,8 +20,9 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 
 | Tarefa | Título | Prioridade | Modelo | Depende de | Status | Em uso por | Etapa |
 |---|---|---|---|---|---|---|---|
-| **CRMPDF** | **Botão Exportar PDF na atividade do CRM** | 🟡 Média | — | Nenhuma | 🔄 Em progresso | — (não reservável) | [ETAPA-003](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
-| CRMPDF.1 | Botão Exportar PDF (jsPDF + autotable), padrão SENAI e visual futurista · `MEDIO · effort medium` | 🟡 Média | MEDIO · só Sonnet | Nenhuma | 🔄 Em execução | Claude Code (Sonnet 5.5) (local · main) (desde 2026-10-22) | [ETAPA-003](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
+| **CRMAPI** | **json-server real e menu Config no CRM** | 🟡 Média | — | Nenhuma | 🔄 Em progresso | — (não reservável) | [ETAPA-004](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
+| CRMAPI.1 | api.js (cliente do json-server) e telas usando promessas · `MEDIO · effort medium` | 🟡 Média | MEDIO · só Sonnet | Nenhuma | 🔄 Em execução | Claude Code (Sonnet 5.5) (local · main) (desde 2026-10-22) | [ETAPA-004](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
+| CRMAPI.2 | Menu Config com modal para o endereço do banco local · `MEDIO · effort medium` | 🟡 Média | MEDIO · só Sonnet | CRMAPI.1 | ⬜ Pendente | — | [ETAPA-004](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
 
 ## Escopo do projeto
 
@@ -35,6 +36,7 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 | 001-3b9e61d4 | CRM: atividade SA com projeto Vite de CRM | [ETAPA-001-3b9e61d4-CRM-ATIVIDADE.md](etapas/ETAPA-001-3b9e61d4-CRM-ATIVIDADE.md) |
 | 002-5d7a2c80 | MENU: botão COVERAGE com modal | [ETAPA-002-5d7a2c80-MENU-COVERAGE.md](etapas/ETAPA-002-5d7a2c80-MENU-COVERAGE.md) |
 | 003-8c4f17a9 | CRMPDF: botão Exportar PDF na atividade do CRM | [ETAPA-003-8c4f17a9-CRM-PDF.md](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
+| 004-6e2d9b35 | CRMAPI: json-server real e menu Config no CRM | [ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
 
 ## Riscos
 

@@ -8,8 +8,7 @@ CAPACIDADE / Contexto / Comando / Resposta (skill EXERCICIOS do aulasenai), com 
 
 ### CRMPDF.1 — Botão Exportar PDF (jsPDF + autotable) com padrão SENAI e visual futurista
 
-**Próximo passo:** criar `crm/src/pdf-atividade.js` (+ teste), ligar o botão em `atividade-sa.html`
-e acrescentar à atividade os itens no padrão CAPACIDADE/Contexto/Comando/Resposta.
+**Próximo passo:** nenhum — entregue.
 
 - **Nível:** MEDIO — código com lógica em poucos arquivos, sem banco nem segurança.
 - **Modelo:** só Sonnet — nunca outro
@@ -18,4 +17,4 @@ e acrescentar à atividade os itens no padrão CAPACIDADE/Contexto/Comando/Respo
   Estudante, Desempenho), seções e itens em tabelas de borda fina, fundo escuro com ciano/magenta.
 - **Critérios de Aceitação:** o botão baixa um PDF; o PDF tem o cabeçalho SENAI, os itens com
   rótulos em negrito e linhas de resposta; testes da extração passam; `vite build` sem erro.
-- **Entrega:** — · **Verificação:** —
+- **Entrega:** commit `f232695` · **Verificação:** `vitest run src/pdf-atividade.test.js` → 7 testes passando; `vite build` ok; PDF de teste gerado por script (7 páginas, 12 seções, 4 itens). Layout visual do PDF não conferido (sem navegador nem leitor de PDF): abrir `crm/atividade-sa.html` e clicar em Exportar PDF.
