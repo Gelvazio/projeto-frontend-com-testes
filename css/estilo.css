@@ -126,9 +126,44 @@ body {
   background: transparent;
 }
 
-.botao--link {
-  display: inline-block;
-  text-decoration: none;
+/* Modal de coverage */
+.modal {
+  width: min(1100px, 94vw);
+  height: 85vh;
+  padding: 0;
+  color: var(--cor-texto);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal::backdrop {
+  background: var(--cor-sombra);
+}
+
+.modal__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px var(--espaco);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.modal__cabecalho h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.modal__conteudo {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: #ffffff;
 }
 
 .botao:hover,

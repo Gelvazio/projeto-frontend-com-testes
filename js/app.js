@@ -4,6 +4,7 @@
  */
 
 const CHAVE_TEMA = 'projeto-frontend-com-testes:tema';
+const URL_COVERAGE = 'coverage/index.html';
 const MSG_IMC_INVALIDO = 'Digite valores válidos.';
 const MSG_CARRINHO_VAZIO = 'Seu carrinho está vazio.';
 const MSG_SEM_PRODUTOS = 'Nenhum produto encontrado.';
@@ -228,7 +229,25 @@ function iniciarTema() {
   aplicar();
 }
 
+/** Liga o botão COVERAGE: abre o relatório de coverage num modal. */
+function iniciarCoverage() {
+  const modal = document.querySelector('#modal-coverage');
+  const quadro = document.querySelector('#modal-coverage-quadro');
+
+  document.querySelector('#botao-coverage').addEventListener('click', () => {
+    if (!quadro.getAttribute('src')) quadro.src = URL_COVERAGE;
+    modal.showModal();
+  });
+  document
+    .querySelector('#modal-coverage-fechar')
+    .addEventListener('click', () => modal.close());
+  modal.addEventListener('click', (evento) => {
+    if (evento.target === modal) modal.close();
+  });
+}
+
 iniciarTema();
+iniciarCoverage();
 iniciarImc();
 iniciarLampada();
 iniciarLoja();
