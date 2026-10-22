@@ -21,14 +21,24 @@
       .documento code, .documento pre { font-family: var(--fonte-dados); color: var(--cor-ciano); }
       .documento pre { padding: 12px; overflow-x: auto; background: rgba(5, 3, 13, 0.8); border: 1px solid var(--cor-borda); border-radius: 6px; }
       .documento li { margin-bottom: 4px; }
+      .documento__topo { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+      .exercicio-box { margin: 12px 0; padding: 14px; border: 1px solid var(--cor-borda); border-radius: 8px; background: rgba(5, 3, 13, 0.6); }
+      .exercicio-header { margin-bottom: 8px; font-family: var(--fonte-titulo); color: var(--cor-magenta); }
+      .exercicio-label { font-weight: 700; color: var(--cor-ciano); }
+      .resposta-linha { height: 24px; border-bottom: 1px solid var(--cor-borda); }
+      @media print { .documento__topo button { display: none; } }
     </style>
   </head>
   <body>
     <div class="grade" aria-hidden="true"></div>
     <main class="documento">
-      <h1>PLANO DE ENSINO — Situação de Aprendizagem</h1>
+      <div class="documento__topo">
+        <h1>PLANO DE ENSINO — Situação de Aprendizagem</h1>
+        <button class="botao" id="botao-pdf" type="button">📥 Exportar PDF</button>
+      </div>
 
       <section class="cartao">
+        <h2>Identificação</h2>
         <table>
           <tr><th>Curso</th><td>Técnico em Informática para Internet</td></tr>
           <tr><th>Unidade Curricular</th><td>Testes de Front-End</td></tr>
@@ -162,6 +172,42 @@ npm pkg set scripts.test="vitest" scripts.test:run="vitest run"</pre>
         </table>
       </section>
 
+      <section class="cartao" id="exercicios-modulo">
+        <h2>Itens da atividade</h2>
+
+        <div class="exercicio-box">
+          <div class="exercicio-header">ITEM 1 - Padrão AAA</div>
+          <p><span class="exercicio-label">CAPACIDADE:</span> C5 - Desenvolver conjunto de testes automatizados.</p>
+          <p><span class="exercicio-label">Contexto:</span> Você, como aluno consultor, recebeu a função <code>validarCliente</code> do CRM sem nenhum teste.</p>
+          <p><span class="exercicio-label">Comando:</span> Escreva um teste em <code>cliente.test.js</code> no padrão AAA (Arrange, Act, Assert) que comprove que um cliente válido não gera erros, e marque no código onde está cada etapa.</p>
+          <p><span class="exercicio-label">Resposta:</span></p>
+        </div>
+
+        <div class="exercicio-box">
+          <div class="exercicio-header">ITEM 2 - Valores-limite e caixa branca</div>
+          <p><span class="exercicio-label">CAPACIDADE:</span> Aplicar a visão de caixa branca para testar cada caminho de uma função (3.2).</p>
+          <p><span class="exercicio-label">Contexto:</span> A idade do cliente só é aceita de 0 a 120 anos, inteira.</p>
+          <p><span class="exercicio-label">Comando:</span> Liste os valores-limite que você testaria (abaixo, no limite e acima) e escreva o teste com <code>it.each</code> para recusar -1, 121 e 20.5 e aceitar 0 e 120.</p>
+          <p><span class="exercicio-label">Resposta:</span></p>
+        </div>
+
+        <div class="exercicio-box">
+          <div class="exercicio-header">ITEM 3 - Matchers adequados</div>
+          <p><span class="exercicio-label">CAPACIDADE:</span> Escrever testes unitários com matchers adequados (C5).</p>
+          <p><span class="exercicio-label">Contexto:</span> No <code>pedido.js</code>, o total soma preço vezes quantidade e arredonda em 2 casas.</p>
+          <p><span class="exercicio-label">Comando:</span> Escolha o matcher para cada verificação e justifique: comparar o objeto do pedido salvo; conferir 0.1 + 0.2; esperar o erro "Sem estoque".</p>
+          <p><span class="exercicio-label">Resposta:</span></p>
+        </div>
+
+        <div class="exercicio-box">
+          <div class="exercicio-header">ITEM 4 - Mock e isolamento</div>
+          <p><span class="exercicio-label">CAPACIDADE:</span> Isolar dependências com mock (<code>vi.fn</code>).</p>
+          <p><span class="exercicio-label">Contexto:</span> A função <code>autenticar</code> recebe o repositório de usuários por parâmetro, em vez de acessar o banco.</p>
+          <p><span class="exercicio-label">Comando:</span> Crie um repositório falso com <code>vi.fn().mockReturnValue</code> e prove que um usuário inativo é recusado e que <code>buscarPorLogin</code> foi chamado com o login digitado. Explique por que não se usa o banco real.</p>
+          <p><span class="exercicio-label">Resposta:</span></p>
+        </div>
+      </section>
+
       <section class="cartao">
         <h2>Verificação da aprendizagem</h2>
         <ul>
@@ -172,5 +218,6 @@ npm pkg set scripts.test="vitest" scripts.test:run="vitest run"</pre>
         </ul>
       </section>
     </main>
+    <script type="module" src="/src/atividade.js"></script>
   </body>
 </html>
