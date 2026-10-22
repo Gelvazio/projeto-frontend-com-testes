@@ -1,0 +1,236 @@
+/* Visual futurista (cyberpunk): prompt VISUAL-FUTURISTA.md do rules-ai. */
+:root {
+  --cor-fundo: #05030d;
+  --cor-superficie: rgba(20, 12, 44, 0.65);
+  --cor-texto: #e8ecff;
+  --cor-texto-suave: #9aa3d6;
+  --cor-ciano: #00f0ff;
+  --cor-magenta: #ff2bd6;
+  --cor-violeta: #7a3cff;
+  --cor-borda: rgba(0, 240, 255, 0.35);
+  --brilho-ciano: 0 0 14px rgba(0, 240, 255, 0.45);
+  --brilho-magenta: 0 0 14px rgba(255, 43, 214, 0.5);
+  --raio: 10px;
+  --espaco: 16px;
+  --fonte-titulo: "Orbitron", "Segoe UI", sans-serif;
+  --fonte-dados: "Share Tech Mono", Consolas, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--fonte-dados);
+  color: var(--cor-texto);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(122, 60, 255, 0.35), transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(255, 43, 214, 0.25), transparent 45%),
+    var(--cor-fundo);
+}
+
+.grade {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espaco) calc(var(--espaco) * 1.5);
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+  backdrop-filter: blur(8px);
+}
+
+.cabecalho__titulo {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 1.4rem;
+  color: var(--cor-ciano);
+  text-shadow: var(--brilho-ciano);
+}
+
+.cabecalho__titulo span {
+  font-size: 0.8rem;
+  color: var(--cor-magenta);
+}
+
+/* Barra de telemetria: varredura animada */
+.telemetria {
+  flex: 1;
+  min-width: 80px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba(0, 240, 255, 0.15);
+}
+
+.telemetria::after {
+  content: "";
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cor-violeta), var(--cor-ciano), var(--cor-magenta));
+  box-shadow: var(--brilho-ciano);
+  animation: varredura 2.4s linear infinite;
+}
+
+@keyframes varredura {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.conteudo {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: calc(var(--espaco) * 1.5) var(--espaco);
+}
+
+.cartao {
+  padding: calc(var(--espaco) * 1.25);
+  margin-bottom: var(--espaco);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--brilho-ciano);
+  backdrop-filter: blur(10px);
+}
+
+.cartao--login {
+  max-width: 420px;
+  margin: 8vh auto 0;
+}
+
+.cartao h2 {
+  margin-top: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 1.1rem;
+  color: var(--cor-ciano);
+}
+
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco);
+  align-items: flex-end;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+}
+
+input,
+select {
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--cor-texto);
+  background: rgba(5, 3, 13, 0.8);
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+}
+
+.botao {
+  padding: 8px 16px;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #05030d;
+  background: var(--cor-ciano);
+  border: 1px solid var(--cor-ciano);
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: var(--brilho-ciano);
+}
+
+.botao--secundario {
+  color: var(--cor-ciano);
+  background: transparent;
+}
+
+.botao--secundario[aria-current="page"] {
+  color: #05030d;
+  background: var(--cor-magenta);
+  border-color: var(--cor-magenta);
+  box-shadow: var(--brilho-magenta);
+}
+
+.botao:hover {
+  filter: brightness(1.2);
+}
+
+.botao:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--cor-magenta);
+  outline-offset: 2px;
+}
+
+.mensagem {
+  min-height: 1.4em;
+  color: var(--cor-magenta);
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th,
+.tabela td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+}
+
+.tabela thead td {
+  color: var(--cor-ciano);
+  font-family: var(--fonte-titulo);
+  font-size: 0.75rem;
+}
+
+.lista-pedidos {
+  padding-left: 18px;
+  color: var(--cor-texto-suave);
+}
+
+@media (max-width: 720px) {
+  .formulario {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tabela {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .telemetria::after {
+    animation: none;
+  }
+}

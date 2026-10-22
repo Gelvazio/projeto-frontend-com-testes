@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SA — Testes unitários no CRM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/estilo.css" />
+    <style>
+      .documento { max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; }
+      .documento h1 { font-family: var(--fonte-titulo); color: var(--cor-ciano); text-shadow: var(--brilho-ciano); }
+      .documento h3 { color: var(--cor-magenta); font-family: var(--fonte-titulo); font-size: 0.95rem; }
+      .documento table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+      .documento th, .documento td { padding: 8px; text-align: left; vertical-align: top; border: 1px solid var(--cor-borda); }
+      .documento th { color: var(--cor-ciano); width: 28%; }
+      .documento code, .documento pre { font-family: var(--fonte-dados); color: var(--cor-ciano); }
+      .documento pre { padding: 12px; overflow-x: auto; background: rgba(5, 3, 13, 0.8); border: 1px solid var(--cor-borda); border-radius: 6px; }
+      .documento li { margin-bottom: 4px; }
+    </style>
+  </head>
+  <body>
+    <div class="grade" aria-hidden="true"></div>
+    <main class="documento">
+      <h1>PLANO DE ENSINO — Situação de Aprendizagem</h1>
+
+      <section class="cartao">
+        <table>
+          <tr><th>Curso</th><td>Técnico em Informática para Internet</td></tr>
+          <tr><th>Unidade Curricular</th><td>Testes de Front-End</td></tr>
+          <tr><th>Aula de referência</th><td>Aula 03 — Testes Unitários no Front-End com Vitest (4 h)</td></tr>
+          <tr><th>Situação de Aprendizagem nº</th><td>1</td></tr>
+        </table>
+      </section>
+
+      <section class="cartao">
+        <h2>Capacidades</h2>
+        <h3>Capacidades Básicas</h3>
+        <p>—</p>
+        <h3>Capacidades Técnicas</h3>
+        <ul>
+          <li>C5 — Desenvolver conjunto de testes automatizados.</li>
+          <li>Definir automação de testes e o que é um teste unitário (2.1).</li>
+          <li>Reconhecer os frameworks de teste do front-end e o papel do Vitest (2.2).</li>
+          <li>Preparar um projeto Vite com Vitest e rodar a suíte pelo terminal (2.3).</li>
+          <li>Aplicar a visão de caixa branca para testar cada caminho de uma função (3.2).</li>
+          <li>Isolar dependências com mock (<code>vi.fn</code>).</li>
+        </ul>
+        <h3>Capacidades Socioemocionais</h3>
+        <ul>
+          <li>Aplicar os princípios de organização nas atividades sob sua responsabilidade.</li>
+          <li>Reconhecer os diferentes comportamentos das pessoas nos grupos e nas equipes (dupla).</li>
+        </ul>
+      </section>
+
+      <section class="cartao">
+        <h2>Estratégia de Aprendizagem Desafiadora</h2>
+        <p>( X ) Situação-Problema &nbsp; ( &nbsp;) Estudo de Caso &nbsp; ( &nbsp;) Projeto &nbsp; ( &nbsp;) Pesquisa Aplicada</p>
+      </section>
+
+      <section class="cartao">
+        <h2>Contextualização</h2>
+        <p>
+          Uma equipe comercial controla clientes, produtos e vendas em planilhas e perde pedidos por
+          erros simples: cliente sem cidade, produto com preço zero, venda acima do estoque e
+          acesso de usuários que já foram desligados. Antes de trocar a planilha por um CRM, o
+          gestor exige que cada parte do sistema nasça com testes automatizados, para que uma
+          alteração futura não quebre o que já funciona (teste de regressão).
+        </p>
+        <p>
+          O CRM é um projeto <strong>Vite</strong> com uma página principal (<code>index.html</code>)
+          e um arquivo JavaScript por assunto. Não há banco de dados: o arquivo <code>banco.js</code>
+          imita um <em>json-server</em> (listar, buscar, criar, atualizar, remover) guardando tudo em
+          memória.
+        </p>
+      </section>
+
+      <section class="cartao">
+        <h2>Desafio</h2>
+        <p>
+          <strong>Você, como aluno consultor</strong>, foi chamado para garantir a qualidade do CRM.
+          Complete o projeto fornecido e escreva <strong>um arquivo de teste para cada arquivo de
+          código</strong>, seguindo o padrão <strong>AAA</strong> (Arrange, Act, Assert), usando o
+          matcher mais específico em cada verificação e cobrindo os valores-limite. Nos testes de
+          <code>login.js</code> e <code>pedido.js</code>, substitua dependências por <em>mocks</em>.
+        </p>
+        <p>Regra do projeto: <strong>não use <code>async</code>/<code>await</code></strong> — as funções são síncronas e recebem suas dependências por parâmetro.</p>
+      </section>
+
+      <section class="cartao">
+        <h2>Resultados esperados</h2>
+        <ul>
+          <li>Projeto Vite do CRM rodando (<code>npm run dev</code>) com login, menu, clientes, produtos, pedidos e usuários.</li>
+          <li>Um <code>.test.js</code> para cada arquivo: <code>banco</code>, <code>tela</code>, <code>cliente</code>, <code>produto</code>, <code>pedido</code>, <code>usuario</code>, <code>login</code> e <code>menu</code>.</li>
+          <li>No mínimo 3 testes por arquivo, incluindo bordas (idade 0 e 120, estoque 0, status 0 e 1).</li>
+          <li>Print do terminal com <code>npm run test:run</code> e todos os testes passando.</li>
+        </ul>
+      </section>
+
+      <section class="cartao">
+        <h2>Mapa do projeto</h2>
+        <table>
+          <tr><th>Arquivo</th><td>Responsabilidade → o que o teste deve provar</td></tr>
+          <tr><th><code>banco.js</code></th><td>"json-server" em memória → ids autoincrementais, buscar inexistente (<code>null</code>), cópias isoladas, <code>aoMudar</code> chamado (mock).</td></tr>
+          <tr><th><code>cliente.js</code></th><td>{id, nome, idade, cidade, salario} → validação, limites de idade, <code>toThrow</code>, <code>toContain</code>.</td></tr>
+          <tr><th><code>produto.js</code></th><td>{id, nome, preco, estoque} → preço &gt; 0, estoque inteiro ≥ 0, <code>temEstoque</code>.</td></tr>
+          <tr><th><code>usuario.js</code></th><td>{id, login, senha, status 1=ativo / 0=inativo} → status válido, login único.</td></tr>
+          <tr><th><code>login.js</code></th><td>Autenticação → 4 motivos de recusa + sucesso; repositório falso com <code>vi.fn().mockReturnValue</code>.</td></tr>
+          <tr><th><code>pedido.js</code></th><td>Venda → <code>toBeCloseTo</code> no total, baixa de estoque, relógio mockado, erros.</td></tr>
+          <tr><th><code>menu.js</code></th><td>Navegação → um botão por item, clique chama <code>aoSelecionar</code>, só um item ativo.</td></tr>
+          <tr><th><code>tela.js</code></th><td>Molde de cadastro → leitura de campos, tabela, mensagem de erro no envio.</td></tr>
+        </table>
+      </section>
+
+      <section class="cartao">
+        <h2>Passo a passo</h2>
+        <ol>
+          <li><strong>Passo 0 (35 min):</strong> criar o projeto e rodar o primeiro teste.
+<pre>npm create vite@latest crm -- --template vanilla
+cd crm
+npm install -D vitest jsdom
+npm pkg set scripts.test="vitest" scripts.test:run="vitest run"</pre>
+            No <code>vite.config.js</code> use <code>test: { environment: 'jsdom' }</code>.</li>
+          <li>Escreva <code>banco.js</code> e <code>banco.test.js</code>. Rode <code>npm test</code> (modo observação).</li>
+          <li>Repita a dupla <em>arquivo + teste</em> para <code>cliente</code>, <code>produto</code>, <code>usuario</code>, <code>login</code>, <code>pedido</code>, <code>menu</code> e <code>tela</code>, nessa ordem.</li>
+          <li>Monte o <code>index.html</code> e o <code>main.js</code> ligando login → menu → telas.</li>
+          <li><strong>Dinâmica "Mutante sobrevivente" (25 min):</strong> a dupla A troca <code>&gt;=</code> por <code>&gt;</code> (ou um valor fixo) no código da dupla B; se nenhum teste falhar, a dupla B escreve o teste que faltava.</li>
+          <li>Tire o print de <code>npm run test:run</code> e entregue o projeto (sem <code>node_modules</code>).</li>
+        </ol>
+      </section>
+
+      <section class="cartao">
+        <h2>Plano de aula (4 h = 240 min)</h2>
+        <table>
+          <tr><th>Momento</th><td>Tempo — o que acontece</td></tr>
+          <tr><th>Retomada</th><td>15 min — quiz sobre plano e casos de teste.</td></tr>
+          <tr><th>Exposição</th><td>40 min — automação, Vitest, AAA e matchers.</td></tr>
+          <tr><th>Prática guiada</th><td>35 min — Passo 0 e primeiro teste (<code>banco</code>).</td></tr>
+          <tr><th>Intervalo</th><td>15 min.</td></tr>
+          <tr><th>Prática autônoma</th><td>70 min — <code>cliente</code>, <code>produto</code>, <code>usuario</code>, <code>login</code>.</td></tr>
+          <tr><th>Dinâmica</th><td>25 min — mutante sobrevivente.</td></tr>
+          <tr><th>Mock e debate</th><td>40 min — <code>pedido</code>/<code>login</code> com mock; "Quanto devemos mockar?".</td></tr>
+        </table>
+      </section>
+
+      <section class="cartao">
+        <h2>Critérios de avaliação</h2>
+        <table>
+          <tr><th>Indicador</th><td>Critério (Sim/Não)</td></tr>
+          <tr><th>(6) Escreve testes unitários com padrão AAA e matchers adequados (C5)</th><td>
+            ( ) Há um arquivo de teste para cada arquivo de código.<br />
+            ( ) Cada teste tem nome que descreve o comportamento esperado e é independente dos demais.<br />
+            ( ) Os matchers são os mais específicos (<code>toBe</code>, <code>toEqual</code>, <code>toBeCloseTo</code>, <code>toThrow</code>, <code>toContain</code>).<br />
+            ( ) Valores-limite e todos os caminhos (caixa branca) estão cobertos.<br />
+            ( ) <code>login.js</code> e <code>pedido.js</code> usam mock; não há <code>await</code> no projeto.<br />
+            ( ) <code>npm run test:run</code> passa com todos os testes.
+          </td></tr>
+        </table>
+      </section>
+
+      <section class="cartao">
+        <h2>Verificação da aprendizagem</h2>
+        <ul>
+          <li>Aponte Arrange, Act e Assert em um teste do seu projeto.</li>
+          <li>Qual matcher compara <code>{ id: 1 }</code>? E <code>0.1 + 0.2</code>? E um erro esperado?</li>
+          <li>Quantos testes, no mínimo, tem <code>autenticar</code> e por quê?</li>
+          <li>Por que o teste de <code>login.js</code> não deve usar o banco real?</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
