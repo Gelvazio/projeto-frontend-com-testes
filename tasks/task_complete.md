@@ -15,3 +15,5 @@
 | **CRMAPI** | **json-server real e menu Config no CRM** | 🟡 Média | — | Nenhuma | ✅ Concluído | — (não reservável) | [ETAPA-004](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
 | CRMEX.1 | Teste de exemplo comentado, página exemplo-usuario.html e botão na atividade | 🟡 Média | MEDIO · só Sonnet | Nenhuma | ✅ Concluído | — | [ETAPA-005](etapas/ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md) |
 | **CRMEX** | **Teste de exemplo do usuario.js e página de passo a passo** | 🟡 Média | — | Nenhuma | ✅ Concluído | — (não reservável) | [ETAPA-005](etapas/ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md) |
+| **COMMIT.INICIAL.RULES-AI** | **Commit e push inicial do quadro com a tarefa COMMIT.INICIAL.RULES-AI (mudança em massa em 5 repositórios)** | 🟡 Média | — | Nenhuma | ✅ Concluído | — (não reservável) | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
+| COMMIT.INICIAL.RULES-AI.1 | Registrar a tarefa no quadro, commit e push na `main` · `PESADO · effort high` | 🟡 Média | PESADO · só Sonnet, Opus 5.5+ ou Fable · effort high | Nenhuma | ✅ Concluído | — | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
