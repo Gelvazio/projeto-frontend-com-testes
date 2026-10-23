@@ -11,6 +11,7 @@ Prioridade: 🔴 Máxima · 🟠 Alta · 🟡 Média · 🟢 Baixa
 
 | Frente | Tarefa (etapa) | Situação | Atualizado em |
 |---|---|---|---|
+| Claude Code (Sonnet 5.5) (local · main) | COMMIT.INICIAL.RULES-AI.1 ([ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md)) | 🔄 Ativa | 2026-10-23 09:38 |
 | Claude Code (Sonnet 5.5) (local · main) | — | ⏹️ Encerrada | 2026-10-22 |
 
 ## 📌 Tarefas
@@ -20,8 +21,8 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 
 | Tarefa | Título | Prioridade | Modelo | Depende de | Status | Em uso por | Etapa |
 |---|---|---|---|---|---|---|---|
-| **COMMIT.INICIAL.RULES-AI** | **Commit e push inicial do quadro com a tarefa COMMIT.INICIAL.RULES-AI (mudança em massa em 5 repositórios)** | 🟡 Média | — | Nenhuma | ⬜ Pendente | — (não reservável) | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
-| COMMIT.INICIAL.RULES-AI.1 | Registrar a tarefa no quadro, commit e push na `main` · `PESADO · effort high` | 🟡 Média | PESADO · só Sonnet, Opus 5.5+ ou Fable · effort high | Nenhuma | ⬜ Pendente | — | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
+| **COMMIT.INICIAL.RULES-AI** | **Commit e push inicial do quadro com a tarefa COMMIT.INICIAL.RULES-AI (mudança em massa em 5 repositórios)** | 🟡 Média | — | Nenhuma | 🔄 Em execução | — (não reservável) | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
+| COMMIT.INICIAL.RULES-AI.1 | Registrar a tarefa no quadro, commit e push na `main` · `PESADO · effort high` | 🟡 Média | PESADO · só Sonnet, Opus 5.5+ ou Fable · effort high | Nenhuma | 🔄 Em execução | Claude Code (Sonnet 5.5) (local · main) (desde 2026-10-23 09:38) · 0% | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
 
 ## Escopo do projeto
 
