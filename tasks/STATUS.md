@@ -21,6 +21,8 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 
 | Tarefa | Título | Prioridade | Modelo | Depende de | Status | Em uso por | Etapa |
 |---|---|---|---|---|---|---|---|
+| **JEV-NAO** | **Marcar JEV-AI-SUGGESTION: NAO nas etapas do projeto (C47)** | 🟡 Média | — | Nenhuma | ⬜ Pendente (mãe: pegue uma subtarefa) | — (não reservável) | [ETAPA-007](etapas/ETAPA-007-398a3bef-JEV-NAO-MARCAR-SUGESTAO.md) |
+| JEV-NAO.1 | Rodar o script que marca JEV-AI-SUGGESTION: NAO nas subtarefas | 🟡 Média | LEVE · só Haiku | Nenhuma | ⬜ Pendente | — | [ETAPA-007](etapas/ETAPA-007-398a3bef-JEV-NAO-MARCAR-SUGESTAO.md) |
 
 ## Escopo do projeto
 
@@ -37,6 +39,7 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 | 004-6e2d9b35 | CRMAPI: json-server real e menu Config no CRM | [ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
 | 005-9a1c4e72 | CRMEX: teste de exemplo do usuario.js e página de passo a passo | [ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md](etapas/ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md) |
 | 006-d21bd368 | COMMIT.INICIAL.RULES-AI: commit e push inicial do quadro | [ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
+| 007-398a3bef | JEV-NAO: Marcar JEV-AI-SUGGESTION: NAO nas etapas do projeto (C47) | [ETAPA-007-398a3bef-JEV-NAO-MARCAR-SUGESTAO.md](etapas/ETAPA-007-398a3bef-JEV-NAO-MARCAR-SUGESTAO.md) |
 
 ## Riscos
 
