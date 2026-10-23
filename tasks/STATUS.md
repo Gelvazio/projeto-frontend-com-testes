@@ -20,6 +20,8 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 
 | Tarefa | Título | Prioridade | Modelo | Depende de | Status | Em uso por | Etapa |
 |---|---|---|---|---|---|---|---|
+| **COMMIT.INICIAL.RULES-AI** | **Commit e push inicial do quadro com a tarefa COMMIT.INICIAL.RULES-AI (mudança em massa em 5 repositórios)** | 🟡 Média | — | Nenhuma | ⬜ Pendente | — (não reservável) | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
+| COMMIT.INICIAL.RULES-AI.1 | Registrar a tarefa no quadro, commit e push na `main` · `PESADO · effort high` | 🟡 Média | PESADO · só Sonnet, Opus 5.5+ ou Fable · effort high | Nenhuma | ⬜ Pendente | — | [ETAPA-006](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
 
 ## Escopo do projeto
 
@@ -35,6 +37,7 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 | 003-8c4f17a9 | CRMPDF: botão Exportar PDF na atividade do CRM | [ETAPA-003-8c4f17a9-CRM-PDF.md](etapas/ETAPA-003-8c4f17a9-CRM-PDF.md) |
 | 004-6e2d9b35 | CRMAPI: json-server real e menu Config no CRM | [ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md](etapas/ETAPA-004-6e2d9b35-CRM-JSON-SERVER.md) |
 | 005-9a1c4e72 | CRMEX: teste de exemplo do usuario.js e página de passo a passo | [ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md](etapas/ETAPA-005-9a1c4e72-CRM-EXEMPLO-USUARIO.md) |
+| 006-d21bd368 | COMMIT.INICIAL.RULES-AI: commit e push inicial do quadro | [ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md](etapas/ETAPA-006-d21bd368-COMMIT-INICIAL-RULES-AI.md) |
 
 ## Riscos
 
