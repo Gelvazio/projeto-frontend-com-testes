@@ -22,7 +22,7 @@ Aqui só ficam tarefas **abertas ou em andamento**; linha que vira ✅ vai para 
 | Tarefa | Título | Prioridade | Modelo | Depende de | Status | Em uso por | Etapa |
 |---|---|---|---|---|---|---|---|
 | **JEV-NAO** | **Marcar JEV-AI-SUGGESTION: NAO nas etapas do projeto (C47)** | 🟡 Média | — | Nenhuma | ⬜ Pendente (mãe: pegue uma subtarefa) | — (não reservável) | [ETAPA-007](etapas/ETAPA-007-398a3bef-JEV-NAO-MARCAR-SUGESTAO.md) |
-| JEV-NAO.1 | Rodar o script que marca JEV-AI-SUGGESTION: NAO nas subtarefas | 🟡 Média | LEVE · só Haiku | Nenhuma | ⬜ Pendente | — | [ETAPA-007](etapas/ETAPA-007-398a3bef-JEV-NAO-MARCAR-SUGESTAO.md) |
+| JEV-NAO.1 | Rodar o script que marca JEV-AI-SUGGESTION: NAO nas subtarefas | 🟡 Média | LEVE · só Haiku | Nenhuma | 🔄 Em execução | Claude Code (Haiku 5.5) (local · main · JEV-NAO) (desde 2026-10-26 19:14) | [ETAPA-007](etapas/ETAPA-007-398a3bef-JEV-NAO-MARCAR-SUGESTAO.md) |
 
 ## Escopo do projeto
 
