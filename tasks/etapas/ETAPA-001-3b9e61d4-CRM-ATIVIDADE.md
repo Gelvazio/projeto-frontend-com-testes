@@ -15,6 +15,7 @@ Situação de Aprendizagem, para a Aula 03 (testes unitários).
 - **Nível:** MEDIO — vários arquivos de código, sem banco real nem segurança.
 - **Modelo:** só Sonnet — nunca outro
 - **Descrição:** `banco.js` (lógica de json-server em memória), `cliente.js`, `produto.js`,
+- **JEV-AI-SUGGESTION:** NAO
   `pedido.js`, `usuario.js` (id, login, senha, status 1/0), `login.js`, `menu.js`, `tela.js`,
   `main.js`, `index.html`, `estilo.css` (cyberpunk) e um `.test.js` por arquivo; sem `async`/`await`.
 - **Critérios de Aceitação:** 8 arquivos de teste passando; `vite build` sem erro; nenhum `await`.

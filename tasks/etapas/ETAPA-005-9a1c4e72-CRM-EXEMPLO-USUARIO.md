@@ -15,6 +15,7 @@ repeti-lo nos demais arquivos do CRM.
 - **Nível:** MEDIO — 1 teste, 1 página e ajustes em 2 arquivos, sem banco novo nem segurança.
 - **Modelo:** só Sonnet — nunca outro
 - **Descrição:** `src/usuario.exemplo.test.js` (18 testes, comentado por passos: AAA, matchers,
+- **JEV-AI-SUGGESTION:** NAO
   `it.each`, `beforeEach`, promessas com `.then` e `return`, mock com `vi.fn`, jsdom e
   `vi.waitFor`); `exemplo-usuario.html` com 12 passos (ambiente, leitura do código, plano de casos,
   imports, cada grupo de testes, rodar, mutante sobrevivente e checklist) usando trechos copiados do

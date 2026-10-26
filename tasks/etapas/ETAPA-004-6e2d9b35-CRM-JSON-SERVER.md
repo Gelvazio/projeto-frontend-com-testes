@@ -29,6 +29,7 @@ Config permite informar o endereço (caminho) desse banco local.
 - **Nível:** MEDIO — vários arquivos de código, banco local de exercício (ver Decisões).
 - **Modelo:** só Sonnet — nunca outro
 - **Descrição:** `api.js` com listar/buscarPorId/criar/atualizar/remover sobre as rotas REST do
+- **JEV-AI-SUGGESTION:** NAO
   json-server; módulos de domínio devolvem promessas; ajuda de teste `api-falsa.js` em memória.
 - **Critérios de Aceitação:** `npm run api` sobe o json-server com `db.json`; testes passam sem
   `await`; `vite build` sem erro.
@@ -42,6 +43,7 @@ Config permite informar o endereço (caminho) desse banco local.
 - **Modelo:** só Sonnet — nunca outro
 - **Depende de:** CRMAPI.1
 - **Descrição:** item `Config` no menu abre um `<dialog>` com campo "Caminho do banco de dados
+- **JEV-AI-SUGGESTION:** NAO
   local" (URL do json-server), botões Salvar e Testar conexão; valor salvo em `localStorage` e
   lido por `api.js`; padrão `http://localhost:3000`.
 - **Critérios de Aceitação:** o modal abre pelo menu, grava e carrega o endereço, recusa URL

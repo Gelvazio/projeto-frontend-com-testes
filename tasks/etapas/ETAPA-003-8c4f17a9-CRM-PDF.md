@@ -13,6 +13,7 @@ CAPACIDADE / Contexto / Comando / Resposta (skill EXERCICIOS do aulasenai), com 
 - **Nível:** MEDIO — código com lógica em poucos arquivos, sem banco nem segurança.
 - **Modelo:** só Sonnet — nunca outro
 - **Descrição:** `extrairAtividade(documento)` lê a página e monta os dados; `gerarPdf(dados)`
+- **JEV-AI-SUGGESTION:** NAO
   desenha o PDF A4: cabeçalho SENAI (tabela com Data, Docente, Unidade Curricular, Turma,
   Estudante, Desempenho), seções e itens em tabelas de borda fina, fundo escuro com ciano/magenta.
 - **Critérios de Aceitação:** o botão baixa um PDF; o PDF tem o cabeçalho SENAI, os itens com

@@ -12,6 +12,7 @@
 - **Nível:** LEVE — 3 arquivos pequenos (HTML, CSS e JS), sem lógica de negócio.
 - **Modelo:** só Haiku — nunca outro
 - **Descrição:** botão `COVERAGE` no cabeçalho; `<dialog>` com `<iframe>` que carrega
+- **JEV-AI-SUGGESTION:** NAO
   `coverage/index.html` na primeira abertura; fecha pelo botão ou clicando fora.
 - **Critérios de Aceitação:** o botão abre o relatório no modal e o modal fecha.
 - **Entrega:** commits `9fda467` e `9e64afc` · **Verificação:** `node --check js/app.js`. Visual
